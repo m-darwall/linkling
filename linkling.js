@@ -11,9 +11,13 @@ async function getWords(wordlist){
 
 function generatePuzzle(words){
     let start = words[Math.floor(Math.random()*words.length)];
-    let target = words[Math.floor(Math.random()*words.length)];
-    while(target.length % 2 !== 0){
-        target = words[Math.floor(Math.random()*words.length)];
+    let target_word = words[Math.floor(Math.random()*words.length)];
+    while(target_word.length % 2 !== 0){
+        target_word = words[Math.floor(Math.random()*words.length)];
+    }
+    let target = []
+    for(let i = 0; i < target_word.length; i+=2) {
+        target.push(target_word[i] + target_word[i + 1])
     }
     return [start, target];
 }
@@ -21,4 +25,13 @@ function generatePuzzle(words){
 async function setup(wordlist){
     let words = await getWords(wordlist);
     let puzzle = generatePuzzle(words);
+    let starter_word = document.createElement("h3");
+    starter_word.innerText = puzzle[0];
+    document.getElementById("chain-container").appendChild(starter_word);
+    for(let i = 0; i < puzzle[1].length; i++){
+        let section = document.createElement("h3");
+        section.innerText = puzzle[1][i];
+        document.getElementById("target-container").appendChild(section);
+    }
+
 }
