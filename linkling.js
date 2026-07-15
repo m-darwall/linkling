@@ -52,8 +52,6 @@ async function getWords(wordlist){
 function generatePuzzle(words){
     let start = words[Math.floor(Math.random()*words.length)];
     let target_word = words[Math.floor(Math.random()*words.length)];
-    start = "loathe";
-    target_word = "enng";
     while(target_word.length % 2 !== 0){
         target_word = words[Math.floor(Math.random()*words.length)];
     }
