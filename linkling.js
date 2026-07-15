@@ -112,7 +112,7 @@ async function setup(wordlist){
             }
         }
     }
-    document.getElementById("undo-button").onclick = function(e){
+    document.getElementById("undo-button").onclick = function(){
         chain.undo()
     }
 }
