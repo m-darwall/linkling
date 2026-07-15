@@ -16,7 +16,10 @@ class Chain{
             if(this.target.includes(word.slice(-2))){
                 this.found.push(word.slice(-2));
                 console.log("turning green");
-                document.getElementById("section_" + word.slice(-2)).style.color = "green";
+                let to_edit = document.getElementsByClassName("section_" + word.slice(-2))
+                for(let i = 0; i < to_edit.length; i++){
+                    to_edit[i].style.color = "green";
+                }
                 if(this.target.length === [...new Set(this.found)].length){
                     complete();
                 }
@@ -54,7 +57,10 @@ class Chain{
             if(this.found.includes(latest.slice(-2)) === false){
                 console.log("and it was the only one")
                 console.log("turning blue");
-                document.getElementById("section_" + latest.slice(-2)).style.color = "aquamarine";
+                let to_edit = document.getElementsByClassName("section_" + latest.slice(-2))
+                for(let i = 0; i < to_edit.length; i++){
+                    to_edit[i].style.color = "aquamarine";
+                }
             }
         }
         console.log(this.found);
@@ -78,6 +84,7 @@ function generatePuzzle(words){
     while(target_word.length % 2 !== 0){
         target_word = words[Math.floor(Math.random()*words.length)];
     }
+    target_word = "semesemeretese"
     let target = []
     for(let i = 0; i < target_word.length; i+=2) {
         target.push(target_word[i] + target_word[i + 1])
@@ -99,7 +106,7 @@ async function setup(wordlist){
         let section = document.createElement("h3");
         section.innerText = puzzle[1][i] + " ";
         section.classList.add("target");
-        section.id = "section_" + puzzle[1][i];
+        section.classList.add("section_" + puzzle[1][i])
         document.getElementById("target-container").appendChild(section);
     }
     let chain = new Chain(words, puzzle[0], puzzle[1]);
