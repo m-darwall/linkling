@@ -53555,8 +53555,6 @@ spasm
 spasmodic
 spasmodically
 spasms
-spastic
-spastics
 spat
 spate
 spates
