@@ -11,12 +11,19 @@ h1, h2, h3, h4, h5, h6{
 
 .target{
     display: inline;
+    padding-bottom: 10px;
 }
 
 #bottom{
     position: fixed;
     bottom: 0;
     width: 100%;
+    background-color: black;
+    height: 20vh;
+}
+
+#chain-container{
+    padding-bottom: 20vh;
 }
 
 #input-container{
