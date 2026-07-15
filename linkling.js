@@ -11,14 +11,17 @@ class Chain{
             this.elements.push(word);
             let new_word = document.createElement("h3");
             new_word.innerText = word;
+            new_word.id = "chain_element_" + this.elements.length;
             document.getElementById("chain-container").appendChild(new_word);
             if(this.target.includes(word.slice(-2))){
-                document.getElementById("section_" + word.slice(-2)).style.color = "green";
                 this.found.push(word.slice(-2));
-                if(this.target.length === this.found.length){
+                console.log("turning green");
+                document.getElementById("section_" + word.slice(-2)).style.color = "green";
+                if(this.target.length === [...new Set(this.found)].length){
                     complete();
                 }
             }
+            console.log(this.found);
             return true;
         }
         return false;
@@ -35,6 +38,26 @@ class Chain{
             }
         }
         return false;
+    }
+
+    undo(){
+        if(this.elements.length <= 1){
+            return false;
+        }
+        document.getElementById("chain_element_" + this.elements.length).remove();
+        let latest = this.elements.pop()
+
+        if(this.target.includes(latest.slice(-2))){
+            console.log("thats one gone")
+            this.found.pop()
+            console.log(this.found)
+            if(this.found.includes(latest.slice(-2)) === false){
+                console.log("and it was the only one")
+                console.log("turning blue");
+                document.getElementById("section_" + latest.slice(-2)).style.color = "aquamarine";
+            }
+        }
+        console.log(this.found);
     }
 }
 
@@ -88,7 +111,9 @@ async function setup(wordlist){
                 document.getElementById("input-box").value = "";
             }
         }
-
+    }
+    document.getElementById("undo-button").onclick = function(e){
+        chain.undo()
     }
 }
 

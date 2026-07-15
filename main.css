@@ -40,3 +40,13 @@ h1, h2, h3, h4, h5, h6{
     margin-right: auto;
     font-size: 20px;
 }
+
+#undo-button{
+        background-color: black;
+        border: 0;
+        color: mediumaquamarine;
+        font-size: 5vh;
+        left: 5vh;
+        position: fixed;
+        top: 5vh;
+}
