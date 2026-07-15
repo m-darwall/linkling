@@ -20562,8 +20562,6 @@ faffs
 fag
 fagged
 fagging$
-faggot
-faggots
 fags
 fah
 fahs$
@@ -37533,12 +37531,6 @@ nieces
 niftier
 niftiest
 nifty
-nigga!
-niggardly
-niggas!
-niggaz!
-nigger
-niggers
 niggle
 niggled
 niggles
