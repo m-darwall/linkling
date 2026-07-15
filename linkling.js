@@ -1,3 +1,43 @@
+class Chain{
+    constructor(words, starter, target){
+        this.elements = [starter];
+        this.target = [...new Set(target)];
+        this.found = [];
+        this.words = words;
+    }
+
+    addWord(word){
+        if (this.checkGuess(word)){
+            this.elements.push(word);
+            let new_word = document.createElement("h3");
+            new_word.innerText = word;
+            document.getElementById("chain-container").appendChild(new_word);
+            if(this.target.includes(word.slice(-2))){
+                document.getElementById("section_" + word.slice(-2)).style.color = "green";
+                this.found.push(word.slice(-2));
+                if(this.target.length === this.found.length){
+                    complete();
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    checkGuess(guess){
+        if(!this.words.includes(guess)) {
+            return false;
+        }
+        let latest = this.elements[this.elements.length - 1];
+        for(let i = 2; i <= latest.length; i++){
+            if(latest.slice(-i) === guess.slice(0, i)){
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
 
 async function getWords(wordlist){
     let data = await fetch(wordlist);
@@ -12,6 +52,8 @@ async function getWords(wordlist){
 function generatePuzzle(words){
     let start = words[Math.floor(Math.random()*words.length)];
     let target_word = words[Math.floor(Math.random()*words.length)];
+    start = "loathe";
+    target_word = "enng";
     while(target_word.length % 2 !== 0){
         target_word = words[Math.floor(Math.random()*words.length)];
     }
@@ -22,6 +64,10 @@ function generatePuzzle(words){
     return [start, target];
 }
 
+function complete() {
+    alert("You did it!")
+}
+
 async function setup(wordlist){
     let words = await getWords(wordlist);
     let puzzle = generatePuzzle(words);
@@ -30,8 +76,21 @@ async function setup(wordlist){
     document.getElementById("chain-container").appendChild(starter_word);
     for(let i = 0; i < puzzle[1].length; i++){
         let section = document.createElement("h3");
-        section.innerText = puzzle[1][i];
+        section.innerText = puzzle[1][i] + " ";
+        section.classList.add("target");
+        section.id = "section_" + puzzle[1][i];
         document.getElementById("target-container").appendChild(section);
     }
+    let chain = new Chain(words, puzzle[0], puzzle[1]);
+    document.getElementById("input-box").onkeydown = function(e){
+        if(e.code === "Enter"){
+            console.log(document.getElementById("input-box").value);
+            let result = chain.addWord(document.getElementById("input-box").value);
+            if(result){
+                document.getElementById("input-box").value = "";
+            }
+        }
 
+    }
 }
+
