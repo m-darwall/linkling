@@ -211,10 +211,8 @@ async function setup(wordlist){
     let chain = new Chain(words, puzzle[0], puzzle[1]);
     document.getElementById("input-box").onkeydown = function(e){
         if(e.code === "Enter"){
-            let result = chain.addWord(document.getElementById("input-box").value);
-            if(result){
-                document.getElementById("input-box").value = "";
-            }
+            chain.addWord(document.getElementById("input-box").value);
+            document.getElementById("input-box").value = "";
         }
     }
     document.getElementById("submit-button").onclick = function(){
