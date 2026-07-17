@@ -7,6 +7,8 @@ class Chain{
     }
 
     addWord(word){
+        word = word.replace(/[^a-zA-Z]/g, "").toLowerCase();
+        console.log(word);
         if (this.checkGuess(word)){
             this.elements.push(word);
             let new_word = document.createElement("h3");
