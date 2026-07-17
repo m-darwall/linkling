@@ -42,7 +42,7 @@ class Chain{
             point_breakdown.push("perfect: -" + this.target.length.toString());
             score -= this.target.length;
         }
-        if(this.target === this.found){
+        if(this.target.join("") === this.found.join("")){
             combo++;
             point_breakdown.push("in order: -" + this.target.length.toString());
             score -= this.target.length;
