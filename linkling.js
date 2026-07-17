@@ -36,12 +36,27 @@ class Chain{
         document.getElementById("chain-container").appendChild(new_word);
     }
 
+    display_error(text){
+        let message = document.createElement("h3");
+        message.innerText = text;
+        message.classList.add("error");
+        document.getElementById("chain-container").appendChild(message);
+        setTimeout(function(){
+            message.remove();
+        }, 2000);
+    }
+
     checkGuess(guess){
         if(!this.words.includes(guess)) {
+            this.display_error("not in word list, sorry")
             return false;
         }
         let latest = this.elements[this.elements.length - 1];
-        return checkOverlap(latest, guess);
+        if(checkOverlap(latest, guess) === false){
+            this.display_error("that doesn't overlap with " + latest)
+            return false;
+        }
+        return true;
     }
 
     undo(){
