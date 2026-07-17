@@ -32,7 +32,6 @@ class Chain{
     complete(){
         let success_popup = document.getElementById('success');
         success_popup.style.display = 'flex';
-        let summary = ""
         let score = this.elements.length + this.undo_count - 1;
         let point_breakdown = []
         point_breakdown.push("words: +" + (this.elements.length - 1).toString());
