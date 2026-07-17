@@ -217,6 +217,10 @@ async function setup(wordlist){
             }
         }
     }
+    document.getElementById("submit-button").onclick = function(){
+        chain.addWord(document.getElementById("input-box").value);
+        document.getElementById("input-box").value = "";
+    }
     document.getElementById("undo-button").onclick = function(){
         chain.undo()
     }
