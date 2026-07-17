@@ -56,8 +56,11 @@ h1, h2, h3, h4, h5, h6{
     position: sticky;
     top:0;
     width: 100%;
-    height: 5vh;
+    height: 7vh;
     background-color: var(--topbottom);
+    flex-direction: column;
+    justify-content: center;
+    display: flex;
 }
 
 #chain-container{
@@ -149,6 +152,19 @@ h1, h2, h3, h4, h5, h6{
     border-radius: 25px;
     padding: 5px;
     margin: 20px auto auto;
+}
+
+#howto_button{
+    right: 1vw;
+    background-color: var(--button);
+    border-radius: 2vh;
+    height: 4vh;
+    width: 4vh;
+    font-weight: bold;
+    font-size: 3vh;
+    border: 0;
+    color: var(--text);
+    position: fixed;
 }
 
 @media screen and (max-width: 600px) {
