@@ -1,6 +1,7 @@
 class Chain{
     constructor(words, starter, target){
         this.elements = [starter];
+        this.add_chain_element(starter)
         this.target = [...new Set(target)];
         this.found = [];
         this.words = words;
@@ -11,10 +12,7 @@ class Chain{
         console.log(word);
         if (this.checkGuess(word)){
             this.elements.push(word);
-            let new_word = document.createElement("h3");
-            new_word.innerText = word;
-            new_word.id = "chain_element_" + this.elements.length;
-            document.getElementById("chain-container").appendChild(new_word);
+            this.add_chain_element(word);
             if(this.target.includes(word.slice(-2))){
                 this.found.push(word.slice(-2));
                 let to_edit = document.getElementsByClassName("section_" + word.slice(-2))
@@ -28,6 +26,14 @@ class Chain{
             return true;
         }
         return false;
+    }
+
+    add_chain_element(word){
+        let new_word = document.createElement("h3");
+        new_word.innerText = word;
+        new_word.id = "chain_element_" + this.elements.length;
+        new_word.classList.add("chain_element")
+        document.getElementById("chain-container").appendChild(new_word);
     }
 
     checkGuess(guess){
@@ -198,9 +204,7 @@ async function setup(wordlist){
     let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     let yyyy = today.getFullYear();
     let puzzle = generatePuzzle(words, even_words, 5, parseInt(dd+mm+yyyy));
-    let starter_word = document.createElement("h3");
-    starter_word.innerText = puzzle[0];
-    document.getElementById("chain-container").appendChild(starter_word);
+    let chain = new Chain(words, puzzle[0], puzzle[1]);
     for(let i = 0; i < puzzle[1].length; i++){
         let section = document.createElement("h3");
         section.innerText = puzzle[1][i];
@@ -208,7 +212,6 @@ async function setup(wordlist){
         section.classList.add("section_" + puzzle[1][i])
         document.getElementById("target-container").appendChild(section);
     }
-    let chain = new Chain(words, puzzle[0], puzzle[1]);
     document.getElementById("input-box").onkeydown = function(e){
         if(e.code === "Enter"){
             chain.addWord(document.getElementById("input-box").value);
