@@ -203,7 +203,7 @@ async function setup(wordlist){
     document.getElementById("chain-container").appendChild(starter_word);
     for(let i = 0; i < puzzle[1].length; i++){
         let section = document.createElement("h3");
-        section.innerText = puzzle[1][i] + " ";
+        section.innerText = puzzle[1][i];
         section.classList.add("target");
         section.classList.add("section_" + puzzle[1][i])
         document.getElementById("target-container").appendChild(section);
