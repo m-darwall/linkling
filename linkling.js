@@ -63,7 +63,7 @@ async function getWords(wordlist){
     for (let i = 0; i < words.length; i++) {
         words[i] = words[i].replace(/[^a-zA-Z0-9]/g, "");
     }
-    return words;
+    return fisherYatesShuffle(words);
 }
 
 function get_possible_targets(even_words, words, target_length){
@@ -145,6 +145,14 @@ function getRequiredPairs(possible_targets, current_available){
         needed.delete(current_available[i]);
     }
     return needed
+}
+
+function fisherYatesShuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
 }
 
 function checkOverlap(first, second){
