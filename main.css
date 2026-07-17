@@ -150,3 +150,15 @@ h1, h2, h3, h4, h5, h6{
     padding: 5px;
     margin: 20px auto auto;
 }
+
+@media screen and (max-width: 600px) {
+    #input-container{
+        width: 100%;
+    }
+    #input-box{
+        width: 60%;
+    }
+    .button{
+        width: 20%;
+    }
+}
