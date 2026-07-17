@@ -2,9 +2,10 @@ class Chain{
     constructor(words, starter, target){
         this.elements = [starter];
         this.add_chain_element(starter)
-        this.target = [...new Set(target)];
+        this.target = target;
         this.found = [];
         this.words = words;
+        this.undo_count = 0;
     }
 
     addWord(word){
@@ -20,12 +21,56 @@ class Chain{
                     to_edit[i].style.color = "green";
                 }
                 if(this.target.length === [...new Set(this.found)].length){
-                    complete();
+                    this.complete();
                 }
             }
             return true;
         }
         return false;
+    }
+
+    complete(){
+        let success_popup = document.getElementById('success');
+        success_popup.style.display = 'flex';
+        let summary = ""
+        let score = this.elements.length + this.undo_count - 1;
+        let point_breakdown = []
+        point_breakdown.push("words: +" + (this.elements.length - 1).toString());
+        point_breakdown.push("undos: +" + (this.undo_count).toString());
+        let combo = 0;
+        if(this.elements.length - 1 === this.target.length){
+            combo++;
+            point_breakdown.push("perfect: -" + this.target.length.toString());
+            score -= this.target.length;
+        }
+        if(this.target === this.found){
+            combo++;
+            point_breakdown.push("in order: -" + this.target.length.toString());
+            score -= this.target.length;
+        }
+        if(combo === 2){
+            point_breakdown.push("Perfection! -1");
+            score -= 1;
+        }
+        point_breakdown.push("score: " + score);
+        for(let i = 0; i < point_breakdown.length; i++){
+            let summary_element = document.createElement("h4")
+            summary_element.innerText = point_breakdown[i];
+            summary_element.classList.add("summary_element");
+            success_popup.appendChild(summary_element);
+        }
+        let share_text = "Linkling " + new Date().toDateString() + ":\n" + point_breakdown.join("\n");
+        let share_button = document.createElement("button");
+        share_button.innerText = "share";
+        share_button.id = "share_button";
+        share_button.addEventListener("click", function(){
+            navigator.clipboard.writeText(share_text).then(r => share_button.innerText = "copied");
+        })
+        success_popup.appendChild(share_button);
+        let chain_text = document.createElement("h5");
+        chain_text.innerText = this.elements.join(" -> ");
+        chain_text.id = "chain_text";
+        success_popup.appendChild(chain_text);
     }
 
     add_chain_element(word){
@@ -75,6 +120,8 @@ class Chain{
                 }
             }
         }
+        this.undo_count++;
+        return true;
     }
 }
 
@@ -205,9 +252,6 @@ function checkForWord(word, wordlist){
     return wordlist.filter(checker);
 }
 
-function complete() {
-    alert("You did it!")
-}
 
 async function setup(wordlist){
     let words = await getWords(wordlist);

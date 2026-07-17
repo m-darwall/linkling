@@ -11,6 +11,12 @@ body{
     text-align: center;
     margin: auto;
     background-color: var(--back);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    height: 100vh;
 }
 
 h1{
@@ -119,4 +125,28 @@ h1, h2, h3, h4, h5, h6{
     font-weight: bold;
     width: 10%;
     height: 100%;
+}
+
+#success{
+    display: none;
+    position: fixed;
+    flex-direction: column;
+    background-color: var(--topbottom);
+    width: 40vw;
+    /*height: 70vh;*/
+    border-radius: 25px;
+    box-shadow: -7px 6px 20px 1px;
+    box-shadow-color: var(--button);
+}
+
+.summary_element{
+    margin: 2px;
+}
+
+#share_button {
+    width: 10vw;
+    background-color: var(--button);
+    border-radius: 25px;
+    padding: 5px;
+    margin: 20px auto auto;
 }
