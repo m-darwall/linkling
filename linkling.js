@@ -66,7 +66,7 @@ async function getWords(wordlist){
     return words;
 }
 
-function get_possible_targets(even_words, words){
+function get_possible_targets(even_words, words, target_length){
     let split_even_words = [];
     for(let i = 0; i < even_words.length; i++){
         split_even_words.push([]);
@@ -74,7 +74,7 @@ function get_possible_targets(even_words, words){
             split_even_words[i].push(even_words[i][j] + even_words[i][j+1]);
         }
     }
-    even_words = split_even_words.filter(function(word){return word.length === 3 && [...new Set(word)].length === 3});
+    even_words = split_even_words.filter(function(word){return word.length === target_length && [...new Set(word)].length === target_length});
     // achievable endings from wordlist
     let end_pairs = [...new Set(words.map((word, element) =>{return word.slice(-2)}))].filter(function(word){return word.length === 2})
     // filter out words with unreachable pairs
@@ -89,53 +89,52 @@ function get_possible_targets(even_words, words){
     return even_words;
 }
 
-function generatePuzzle(words, even_words){
-    let possible_targets = get_possible_targets(even_words, words);
+function generatePuzzle(words, even_words, target_length){
+    let possible_targets = get_possible_targets(even_words, words, target_length);
     let start = ""
     let target = []
     while (target.length === 0){
         start = words[Math.floor(Math.random()*words.length)];
-        console.log("Trying with starting word: ", start)
-        let frontier = [[start, [start], possible_targets]];
-        let explored = new Set();
-        let counter = 0;
-        while(frontier.length > 0 && counter < 3000){
-            counter++;
+
+        let frontier = [[start, [start], possible_targets.filter(function(word){
+            return word.includes(start.slice(-2)) === false;
+        })]];
+        let explored = new Set([start]);
+        while(frontier.length > 0){
             let current = frontier.shift();
             let current_word = current[0];
             let current_path = current[1];
-            if(current_path.length - 1 > 4){
-                console.log("too deep")
-                break;
-            }
             let current_available = current_path.map(word => word.slice(-2)).slice(1);
-            let current_targets = current[2].filter(function(word){
-                return word.includes(current_word.slice(-2)) !== false;
-            })
-
+            let current_targets = current[2]
+            if(explored.size > 1){
+                current_targets = current[2].filter(function(word){
+                    return word.includes(current_word.slice(-2)) !== false;
+                })
+            }
             let available_words = []
-            if(current_available.length === 3){
+            if(current_available.length === target_length){
                 available_words = checkForWord(current_available, current_targets);
             }
             if(available_words.length > 0){
                 target = available_words[0]
                 console.log(current_path)
-                console.log(target)
                 return [start, target]
             }
-            let required = getRequiredPairs(current_targets, current_available);
-            for(let i=0;i<words.length;i++){
-                let word = words[i];
-                if(required.has(word.slice(-2)) === false || explored.has(word)){
-                    continue;
-                }
-                if(checkOverlap(current_word, word)){
-                    explored.add(word)
-                    frontier.unshift([word, [...current_path, word], current_targets])
+            if(current_path.length - 1 < target_length){
+                let required = getRequiredPairs(current_targets, current_available);
+                for(let i=0;i<words.length;i++){
+                    let word = words[i];
+                    if(required.has(word.slice(-2)) === false || explored.has(word)){
+                        continue;
+                    }
+                    if(checkOverlap(current_word, word)){
+                        explored.add(word)
+                        frontier.unshift([word, [...current_path, word], current_targets])
+                    }
                 }
             }
+
         }
-        break;
     }
 }
 
@@ -171,7 +170,7 @@ async function setup(wordlist){
     let even_words = words.filter(function(word){
         return word.length % 2 === 0;
     })
-    let puzzle = generatePuzzle(words, even_words);
+    let puzzle = generatePuzzle(words, even_words, 4);
     let starter_word = document.createElement("h3");
     starter_word.innerText = puzzle[0];
     document.getElementById("chain-container").appendChild(starter_word);
