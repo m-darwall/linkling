@@ -62,7 +62,7 @@ class Chain{
         share_button.innerText = "share";
         share_button.id = "share_button";
         share_button.addEventListener("click", function(){
-            navigator.clipboard.writeText(share_text).then(r => share_button.innerText = "copied");
+            navigator.clipboard.writeText(share_text).then(() => share_button.innerText = "copied");
         })
         success_popup.appendChild(share_button);
         let chain_text = document.createElement("h5");
