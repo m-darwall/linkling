@@ -31,13 +31,14 @@ h1, h2, h3, h4, h5, h6{
 #target-container{
     display: inline-flex;
     flex-direction: row;
+    height: 10vh;
 }
 
 .target{
     display: inline;
     text-decoration: underline;
-    margin-right: 2px;
-    font-size: 20px;
+    font-size: 5vh;
+    margin: auto 7px auto auto;
 }
 
 #bottom{
