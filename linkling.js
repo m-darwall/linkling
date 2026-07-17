@@ -63,7 +63,7 @@ async function getWords(wordlist){
     for (let i = 0; i < words.length; i++) {
         words[i] = words[i].replace(/[^a-zA-Z0-9]/g, "");
     }
-    return fisherYatesShuffle(words);
+    return words;
 }
 
 function get_possible_targets(even_words, words, target_length){
@@ -89,13 +89,15 @@ function get_possible_targets(even_words, words, target_length){
     return even_words;
 }
 
-function generatePuzzle(words, even_words, target_length){
+function generatePuzzle(words, even_words, target_length, seed){
+    words = fisherYatesShuffle(words, seed);
     let possible_targets = get_possible_targets(even_words, words, target_length);
     let start = ""
     let target = []
+    let attempts = 0;
     while (target.length === 0){
-        start = words[Math.floor(Math.random()*words.length)];
-
+        start = words[attempts];
+        attempts++;
         let frontier = [[start, [start], possible_targets.filter(function(word){
             return word.includes(start.slice(-2)) === false;
         })]];
@@ -147,13 +149,24 @@ function getRequiredPairs(possible_targets, current_available){
     return needed
 }
 
-function fisherYatesShuffle(arr) {
+function fisherYatesShuffle(arr, seed) {
+    const random = mulberry32(seed);
     for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
+        const j = Math.floor(random() * (i + 1));
         [arr[i], arr[j]] = [arr[j], arr[i]];
     }
     return arr;
 }
+
+function mulberry32(seed) {
+    return function() {
+        let t = (seed += 0x6D2B79F5);
+        t = Math.imul(t ^ (t >>> 15), t | 1);
+        t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+}
+
 
 function checkOverlap(first, second){
     for (let i = 2; i <= Math.min(first.length, second.length - 1); i++){
@@ -178,7 +191,11 @@ async function setup(wordlist){
     let even_words = words.filter(function(word){
         return word.length % 2 === 0;
     })
-    let puzzle = generatePuzzle(words, even_words, 5);
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
+    let puzzle = generatePuzzle(words, even_words, 5, parseInt(dd+mm+yyyy));
     let starter_word = document.createElement("h3");
     starter_word.innerText = puzzle[0];
     document.getElementById("chain-container").appendChild(starter_word);
