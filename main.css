@@ -130,16 +130,27 @@ h1, h2, h3, h4, h5, h6{
     height: 100%;
 }
 
-#success{
+.popup{
     display: none;
     position: fixed;
     flex-direction: column;
     background-color: var(--topbottom);
     width: 40vw;
-    /*height: 70vh;*/
     border-radius: 25px;
     box-shadow: -7px 6px 20px 1px;
     box-shadow-color: var(--button);
+    color: var(--text);
+}
+
+.close{
+    background-color: transparent;
+    color: var(--text);
+    font-size: 3vh;
+    width: 3vh;
+    border: 0;
+    right: 1vh;
+    position: absolute;
+    top: 1vh;
 }
 
 .summary_element{

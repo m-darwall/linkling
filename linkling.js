@@ -10,7 +10,6 @@ class Chain{
 
     addWord(word){
         word = word.replace(/[^a-zA-Z]/g, "").toLowerCase();
-        console.log(word);
         if (this.checkGuess(word)){
             this.elements.push(word);
             this.add_chain_element(word);
@@ -188,7 +187,6 @@ function generatePuzzle(words, even_words, target_length, seed){
             }
             if(available_words.length > 0){
                 target = available_words[0]
-                console.log(current_path)
                 return [start, target]
             }
             if(current_path.length - 1 < target_length){
@@ -282,6 +280,12 @@ async function setup(wordlist){
     }
     document.getElementById("undo-button").onclick = function(){
         chain.undo()
+    }
+    document.getElementById("howto_button").onclick = function(){
+        document.getElementById("howto").style.display = "flex";
+    }
+    document.getElementById("close_howto").onclick =function (){
+        document.getElementById("howto").style.display = "none";
     }
 }
 
