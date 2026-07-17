@@ -38,7 +38,7 @@ class Chain{
         let combo = 0;
         if(this.elements.length - 1 === this.target.length){
             combo++;
-            point_breakdown.push("perfect: -" + this.target.length.toString());
+            point_breakdown.push("minimal: -" + this.target.length.toString());
             score -= this.target.length;
         }
         if(this.target.join("") === this.found.join("")){
