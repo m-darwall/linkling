@@ -76,7 +76,7 @@ function get_possible_targets(even_words, words, target_length){
     }
     even_words = split_even_words.filter(function(word){return word.length === target_length && [...new Set(word)].length === target_length});
     // achievable endings from wordlist
-    let end_pairs = [...new Set(words.map((word, element) =>{return word.slice(-2)}))].filter(function(word){return word.length === 2})
+    let end_pairs = [...new Set(words.map((word) =>{return word.slice(-2)}))].filter(function(word){return word.length === 2})
     // filter out words with unreachable pairs
     even_words = even_words.filter(function(even_word){
         for(let i = 0; i < even_word.length; i++){
@@ -170,7 +170,7 @@ async function setup(wordlist){
     let even_words = words.filter(function(word){
         return word.length % 2 === 0;
     })
-    let puzzle = generatePuzzle(words, even_words, 4);
+    let puzzle = generatePuzzle(words, even_words, 5);
     let starter_word = document.createElement("h3");
     starter_word.innerText = puzzle[0];
     document.getElementById("chain-container").appendChild(starter_word);
