@@ -312,12 +312,14 @@ async function setup(wordlist){
         section.classList.add("section_" + puzzle[1][i])
         document.getElementById("target-container").appendChild(section);
     }
-    document.getElementById("input-box").onkeydown = function(e){
-        if(e.code === "Enter"){
-            chain.addWord(document.getElementById("input-box").value);
-            document.getElementById("input-box").value = "";
+
+    document.getElementById("input-form").addEventListener("submit", (e) =>{
+        e.preventDefault();
+        chain.addWord(document.getElementById("input-box").value);
+        document.getElementById("input-box").value = "";
         }
-    }
+    )
+
     document.getElementById("submit-button").onclick = function(){
         chain.addWord(document.getElementById("input-box").value);
         document.getElementById("input-box").value = "";
