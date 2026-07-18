@@ -78,7 +78,6 @@ class Chain{
         let new_word = document.createElement("h3");
         new_word.id = "chain_element_" + this.elements.length;
         new_word.classList.add("chain_element")
-        let text = ""
         for(let i = 0; i < word.length; i++){
             let new_span = document.createElement("span");
             new_span.innerText = word[i];
@@ -98,13 +97,10 @@ class Chain{
         //update overlap on previous element
         if(this.elements.length > 1){
             let previous_word = this.elements[this.elements.length - 2]
-            console.log(previous_word)
             let overlap_index = previous_word.length - overlap_end;
             for(let i=overlap_index; i < previous_word.length; i++){
                 let id = "element_" + (this.elements.length - 1) + "_letter_" + i;
-                console.log(id);
                 let letter = document.getElementById(id);
-                console.log(letter)
                 letter.classList.add("overlap_end");
             }
         }
@@ -154,10 +150,8 @@ class Chain{
         this.undo_count++;
 
         let previous_word = this.elements[this.elements.length - 1]
-        console.log(previous_word)
         for(let i=0; i < previous_word.length; i++){
             let id = "element_" + (this.elements.length) + "_letter_" + i;
-            console.log(id);
             let letter = document.getElementById(id);
             letter.classList.remove("overlap_end");
         }
