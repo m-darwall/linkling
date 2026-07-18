@@ -94,6 +94,7 @@ class Chain{
             new_word.appendChild(new_span);
         }
         document.getElementById("chain-container").appendChild(new_word);
+        new_word.scrollIntoView({behavior: 'smooth', block: 'center'});
         //update overlap on previous element
         if(this.elements.length > 1){
             let previous_word = this.elements[this.elements.length - 2]
@@ -155,6 +156,8 @@ class Chain{
             let letter = document.getElementById(id);
             letter.classList.remove("overlap_end");
         }
+        latest = document.getElementById("chain_element_" + this.elements.length)
+        latest.scrollIntoView({behavior: 'smooth', block: 'center'});
         return true;
     }
 }
