@@ -118,6 +118,7 @@ class Chain{
         message.innerText = text;
         message.classList.add("error");
         document.getElementById("chain-container").appendChild(message);
+        message.scrollIntoView({behavior: 'smooth', block: 'center'});
         setTimeout(function(){
             message.remove();
         }, 2000);
