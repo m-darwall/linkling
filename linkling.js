@@ -61,7 +61,7 @@ class Chain{
             summary_element.classList.add("summary_element");
             success_popup.appendChild(summary_element);
         }
-        let share_text = "Linkling " + new Date().toDateString() + ":\n" + point_breakdown.join("\n");
+        let share_text = "Linkling " + new Date().toDateString() + ":\n" + point_breakdown.join("\n") + "\nm-darwall.github.io/linkling";
         let share_button = document.createElement("button");
         share_button.innerText = "share";
         share_button.id = "share_button";
