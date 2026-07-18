@@ -1,11 +1,12 @@
 class Chain{
-    constructor(words, starter, target){
+    constructor(words, starter, target, found_path){
         this.elements = [starter];
         this.add_chain_element(starter, 0, false)
         this.target = target;
         this.found = [];
         this.words = words;
         this.undo_count = 0;
+        this.optimum = found_path;
     }
 
     addWord(word){
@@ -72,6 +73,10 @@ class Chain{
         chain_text.innerText = this.elements.join(" -> ");
         chain_text.id = "chain_text";
         success_popup.appendChild(chain_text);
+        let optimum_text = document.createElement("h5");
+        optimum_text.innerHTML = "Possible shortest solution:<br>" + this.optimum.join(" -> ");
+        optimum_text.id = "optimum_text";
+        success_popup.appendChild(optimum_text);
     }
 
     add_chain_element(word, overlap_end, unlocker){
@@ -226,7 +231,7 @@ function generatePuzzle(words, even_words, target_length, seed){
             }
             if(available_words.length > 0){
                 target = available_words[0]
-                return [start, target]
+                return [start, target, current_path]
             }
             if(current_path.length - 1 < target_length){
                 let required = getRequiredPairs(current_targets, current_available);
@@ -299,7 +304,7 @@ async function setup(wordlist){
     let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     let yyyy = today.getFullYear();
     let puzzle = generatePuzzle(words, even_words, 5, parseInt(dd+mm+yyyy));
-    let chain = new Chain(words, puzzle[0], puzzle[1]);
+    let chain = new Chain(words, ...puzzle);
     for(let i = 0; i < puzzle[1].length; i++){
         let section = document.createElement("h3");
         section.innerText = puzzle[1][i];
