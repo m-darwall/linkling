@@ -79,17 +79,34 @@ h1, h2, h3, h4, h5, h6{
 
 .overlap_start{
     text-decoration: underline;
+    text-decoration-color: var(--button);
+    text-decoration-thickness: 5px;
 }
 .overlap_end{
     text-decoration: underline;
+    text-decoration-color: var(--button);
+    text-decoration-thickness: 5px;
 }
 
 .overlap_start.overlap_end{
-    text-decoration: underline thick;
+    text-decoration-line: underline;
+    text-decoration-color: var(--input);
 }
 
-.unlock{
+.unlocker_left, .unlocker_right{
     color: green;
+    background-color: var(--topbottom);
+    text-decoration: underline;
+    text-decoration-thickness: 5px;
+}
+
+.unlocker_left{
+    border-radius: 10px 0 0 10px;
+}
+
+.unlocker_right{
+    border-radius: 0 10px 10px 0;
+    margin-left: -1px;
 }
 
 .error{
