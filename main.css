@@ -221,7 +221,17 @@ h1, h2, h3, h4, h5, h6{
     .button{
         width: 20%;
     }
+
+    #share_button {
+        width: 50vw;
+    }
+}
+
+@media screen and (max-width: 600px) {
     #success{
+        width: 90%;
+    }
+    #howto{
         width: 90%;
     }
 }
