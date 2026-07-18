@@ -76,61 +76,37 @@ class Chain{
 
     add_chain_element(word, overlap_end, unlocker){
         let new_word = document.createElement("h3");
-        let text = ""
-        for(let i = 0; i < word.length; i++){
-            let counter = 0;
-            if(overlap_end > i){
-                text += "<span class='overlap_start'>";
-                counter++;
-            }
-            if(unlocker && i >= word.length - 2){
-                text += "<span class='unlock'>";
-                counter++;
-            }
-            text += word[i];
-            for(let j = 0; j < counter; j++){
-                text += "</span>";
-            }
-        }
         new_word.id = "chain_element_" + this.elements.length;
         new_word.classList.add("chain_element")
+        let text = ""
+        for(let i = 0; i < word.length; i++){
+            let new_span = document.createElement("span");
+            new_span.innerText = word[i];
+            new_span.id = "element_" + this.elements.length + "_letter_" + i;
+            if(overlap_end > i){
+                new_span.classList.add("overlap_start");
+            }
+            if(unlocker && i === word.length - 2){
+                new_span.classList.add("unlocker_left");
+            }
+            if(unlocker && i === word.length - 1){
+                new_span.classList.add("unlocker_right");
+            }
+            new_word.appendChild(new_span);
+        }
         document.getElementById("chain-container").appendChild(new_word);
-        new_word.innerHTML = text;
         //update overlap on previous element
         if(this.elements.length > 1){
-            let previous = document.getElementById("chain_element_" + (this.elements.length - 1).toString());
-            let original = previous.innerHTML;
-            let overlap_index = this.elements[this.elements.length - 2].length - overlap_end;
-            let new_text = "";
-            let counting = true;
-            let counter = 0;
-            let spanning = false;
-            for(let i = 0; i < original.length; i++){
-                if(original[i] === "<"){
-                    counting = false;
-                    new_text += original[i];
-                    continue;
-                }
-                if(original[i] === ">"){
-                    counting = true;
-                    new_text += original[i];
-                    continue;
-                }
-                if(counting){
-                    if(counter >= overlap_index){
-                        new_text += "<span class='overlap_end'>";
-                        spanning = true;
-                    }
-                    counter++;
-                }
-                new_text += original[i];
-                if(spanning){
-                    new_text += "</span>";
-                    spanning = false;
-                }
+            let previous_word = this.elements[this.elements.length - 2]
+            console.log(previous_word)
+            let overlap_index = previous_word.length - overlap_end;
+            for(let i=overlap_index; i < previous_word.length; i++){
+                let id = "element_" + (this.elements.length - 1) + "_letter_" + i;
+                console.log(id);
+                let letter = document.getElementById(id);
+                console.log(letter)
+                letter.classList.add("overlap_end");
             }
-
-            previous.innerHTML = new_text;
         }
 
     }
@@ -176,17 +152,15 @@ class Chain{
             }
         }
         this.undo_count++;
-        let current_head = document.getElementById("chain_element_" + this.elements.length);
-        let old_text = current_head.innerHTML;
-        let new_text = old_text;
-        let progress = 0;
-        let count = (old_text.match(/overlap_end/g) || []).length;
-        for(let i = 0; i < count; i++){
-            let index = new_text.indexOf("<span class=\"overlap_end\">");
-            new_text = new_text.slice(progress, index) + new_text.slice(index).replace("</span>", "");
-            new_text = new_text.replace("<span class=\"overlap_end\">", "");
+
+        let previous_word = this.elements[this.elements.length - 1]
+        console.log(previous_word)
+        for(let i=0; i < previous_word.length; i++){
+            let id = "element_" + (this.elements.length) + "_letter_" + i;
+            console.log(id);
+            let letter = document.getElementById(id);
+            letter.classList.remove("overlap_end");
         }
-        current_head.innerHTML = new_text;
         return true;
     }
 }
