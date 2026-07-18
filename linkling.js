@@ -1,7 +1,7 @@
 class Chain{
     constructor(words, starter, target){
         this.elements = [starter];
-        this.add_chain_element(starter)
+        this.add_chain_element(starter, 0, false)
         this.target = target;
         this.found = [];
         this.words = words;
@@ -10,10 +10,11 @@ class Chain{
 
     addWord(word){
         word = word.replace(/[^a-zA-Z]/g, "").toLowerCase();
-        if (this.checkGuess(word)){
+        let check = this.checkGuess(word);
+        if (check !== false){
             this.elements.push(word);
-            this.add_chain_element(word);
             if(this.target.includes(word.slice(-2))){
+                this.add_chain_element(word, check, true);
                 this.found.push(word.slice(-2));
                 let to_edit = document.getElementsByClassName("section_" + word.slice(-2))
                 for(let i = 0; i < to_edit.length; i++){
@@ -22,6 +23,8 @@ class Chain{
                 if(this.target.length === [...new Set(this.found)].length){
                     this.complete();
                 }
+            } else{
+                this.add_chain_element(word, check, false);
             }
             return true;
         }
@@ -71,12 +74,65 @@ class Chain{
         success_popup.appendChild(chain_text);
     }
 
-    add_chain_element(word){
+    add_chain_element(word, overlap_end, unlocker){
         let new_word = document.createElement("h3");
-        new_word.innerText = word;
+        let text = ""
+        for(let i = 0; i < word.length; i++){
+            let counter = 0;
+            if(overlap_end > i){
+                text += "<span class='overlap_start'>";
+                counter++;
+            }
+            if(unlocker && i >= word.length - 2){
+                text += "<span class='unlock'>";
+                counter++;
+            }
+            text += word[i];
+            for(let j = 0; j < counter; j++){
+                text += "</span>";
+            }
+        }
         new_word.id = "chain_element_" + this.elements.length;
         new_word.classList.add("chain_element")
         document.getElementById("chain-container").appendChild(new_word);
+        new_word.innerHTML = text;
+        //update overlap on previous element
+        if(this.elements.length > 1){
+            let previous = document.getElementById("chain_element_" + (this.elements.length - 1).toString());
+            let original = previous.innerHTML;
+            let overlap_index = this.elements[this.elements.length - 2].length - overlap_end;
+            let new_text = "";
+            let counting = true;
+            let counter = 0;
+            let spanning = false;
+            for(let i = 0; i < original.length; i++){
+                if(original[i] === "<"){
+                    counting = false;
+                    new_text += original[i];
+                    continue;
+                }
+                if(original[i] === ">"){
+                    counting = true;
+                    new_text += original[i];
+                    continue;
+                }
+                if(counting){
+                    if(counter >= overlap_index){
+                        new_text += "<span class='overlap_end'>";
+                        spanning = true;
+                    }
+                    counter++;
+                }
+                new_text += original[i];
+                if(spanning){
+                    new_text += "</span>";
+                    spanning = false;
+                }
+            }
+
+            previous.innerHTML = new_text;
+        }
+
     }
 
     display_error(text){
@@ -95,11 +151,12 @@ class Chain{
             return false;
         }
         let latest = this.elements[this.elements.length - 1];
-        if(checkOverlap(latest, guess) === false){
+        let overlap = checkOverlap(latest, guess)
+        if(overlap === false){
             this.display_error("that doesn't overlap with " + latest)
             return false;
         }
-        return true;
+        return overlap;
     }
 
     undo(){
@@ -119,6 +176,17 @@ class Chain{
             }
         }
         this.undo_count++;
+        let current_head = document.getElementById("chain_element_" + this.elements.length);
+        let old_text = current_head.innerHTML;
+        let new_text = old_text;
+        let progress = 0;
+        let count = (old_text.match(/overlap_end/g) || []).length;
+        for(let i = 0; i < count; i++){
+            let index = new_text.indexOf("<span class=\"overlap_end\">");
+            new_text = new_text.slice(progress, index) + new_text.slice(index).replace("</span>", "");
+            new_text = new_text.replace("<span class=\"overlap_end\">", "");
+        }
+        current_head.innerHTML = new_text;
         return true;
     }
 }
@@ -196,7 +264,7 @@ function generatePuzzle(words, even_words, target_length, seed){
                     if(required.has(word.slice(-2)) === false || explored.has(word)){
                         continue;
                     }
-                    if(checkOverlap(current_word, word)){
+                    if(checkOverlap(current_word, word) !== false){
                         explored.add(word)
                         frontier.unshift([word, [...current_path, word], current_targets])
                     }
@@ -238,7 +306,7 @@ function mulberry32(seed) {
 function checkOverlap(first, second){
     for (let i = 2; i <= Math.min(first.length, second.length - 1); i++){
         if(first.slice(-i) === second.slice(0, i)){
-            return true;
+            return i;
         }
     }
     return false;
