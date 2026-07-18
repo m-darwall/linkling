@@ -132,7 +132,7 @@ class Chain{
         let latest = this.elements[this.elements.length - 1];
         let overlap = checkOverlap(latest, guess)
         if(overlap === false){
-            this.display_error("that doesn't overlap with " + latest)
+            this.display_error("incorrect overlap")
             return false;
         }
         return overlap;
