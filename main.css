@@ -70,6 +70,7 @@ h1, h2, h3, h4, h5, h6{
     flex-direction: column;
     align-items: center;
     padding-bottom: 20vh;
+    padding-top: 5vh;
     color: var(--text);
 }
 
@@ -173,6 +174,7 @@ h1, h2, h3, h4, h5, h6{
     box-shadow: -7px 6px 20px 1px;
     box-shadow-color: var(--button);
     color: var(--text);
+    padding: 3vw;
 }
 
 .close{
@@ -227,7 +229,7 @@ h1, h2, h3, h4, h5, h6{
     }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
     #success{
         width: 90%;
     }
