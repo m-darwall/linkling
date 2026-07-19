@@ -165,10 +165,10 @@ h1, h2, h3, h4, h5, h6{
     border-radius: 25px;
     color: var(--text);
     background-color: var(--button);
-    font-size: 4vh;
+    font-size: 50px;
     font-weight: bold;
-    width: 10%;
     height: 100%;
+    aspect-ratio: 1/1;
 }
 
 .popup{
