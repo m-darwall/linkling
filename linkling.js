@@ -55,6 +55,7 @@ class Chain{
             score -= 1;
         }
         point_breakdown.push("score: " + score);
+        point_breakdown.push("(the lower the better)")
         for(let i = 0; i < point_breakdown.length; i++){
             let summary_element = document.createElement("h4")
             summary_element.innerText = point_breakdown[i];
