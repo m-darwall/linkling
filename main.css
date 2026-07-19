@@ -164,7 +164,8 @@ h1, h2, h3, h4, h5, h6{
     border: 0;
     padding: 0;
     border-radius: 25px;
-    color: var(--text);
+    /*color: var(--text);*/
+    color: red;
     background-color: var(--button);
     font-size: 5vh;
     font-weight: bold;
