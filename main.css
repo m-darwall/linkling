@@ -48,7 +48,7 @@ h1, h2, h3, h4, h5, h6{
     width: 100%;
     bottom: env(safe-area-inset-bottom);
     background-color: var(--topbottom);
-    height: 20vh;
+    height: auto;
     align-items: center;
     justify-content: center;
     flex-direction: column;
@@ -75,11 +75,11 @@ h1, h2, h3, h4, h5, h6{
     color: var(--text);
     overflow-y: scroll;
     width: 100%;
-    padding-bottom: calc(20vh + 2vh + env(safe-area-inset-bottom));
+    padding-bottom: 1000px;
 }
 
 .chain_element{
-    font-size: 4vh;
+    font-size: 35px;
 }
 
 .overlap_start{

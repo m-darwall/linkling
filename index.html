@@ -42,6 +42,25 @@
 <script src="linkling.js"></script>
 <script>
     setup('words.txt');
+    const bottomEl = document.getElementById('bottom');
+
+    function update() {
+    if (!bottomEl) return;
+    const vv = window.visualViewport;
+    if (!vv) return;
+
+    // Visual viewport height shrinks when keyboard is open
+    const keyboardHeight = Math.max(0, window.innerHeight - vv.height);
+
+    // Push the entire #bottom up by exactly the keyboard height
+    bottomEl.style.bottom = keyboardHeight + 'px';
+}
+
+    window.addEventListener('resize', update);
+    window.visualViewport?.addEventListener('resize', update);
+    window.visualViewport?.addEventListener('scroll', update);
+
+    update();
 </script>
 </body>
 </html>
