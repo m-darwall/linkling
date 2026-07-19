@@ -182,6 +182,12 @@ h1, h2, h3, h4, h5, h6{
     box-shadow-color: var(--button);
     color: var(--text);
     padding: 3vw;
+    overflow-y: scroll;
+}
+
+#howto{
+    max-height: 90vh;
+    width: 50vw;
 }
 
 .close{
