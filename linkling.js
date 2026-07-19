@@ -100,7 +100,7 @@ class Chain{
             new_word.appendChild(new_span);
         }
         document.getElementById("chain-container").appendChild(new_word);
-        new_word.scrollIntoView({behavior: 'smooth', block: 'center'});
+        new_word.scrollIntoView({behavior: 'smooth', block: 'end'});
         //update overlap on previous element
         if(this.elements.length > 1){
             let previous_word = this.elements[this.elements.length - 2]
@@ -119,7 +119,7 @@ class Chain{
         message.innerText = text;
         message.classList.add("error");
         document.getElementById("chain-container").appendChild(message);
-        message.scrollIntoView({behavior: 'smooth', block: 'center'});
+        message.scrollIntoView({behavior: 'smooth', block: 'end'});
         setTimeout(function(){
             message.remove();
         }, 2000);
@@ -164,7 +164,7 @@ class Chain{
             letter.classList.remove("overlap_end");
         }
         latest = document.getElementById("chain_element_" + this.elements.length)
-        latest.scrollIntoView({behavior: 'smooth', block: 'center'});
+        latest.scrollIntoView({behavior: 'smooth', block: 'end'});
         return true;
     }
 }
