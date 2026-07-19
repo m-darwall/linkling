@@ -44,8 +44,9 @@ h1, h2, h3, h4, h5, h6{
 #bottom{
     display: flex;
     position: relative;
-    bottom: 0;
+    /*bottom: 0;*/
     width: 100%;
+    bottom: env(safe-area-inset-bottom);
     background-color: var(--topbottom);
     height: 20vh;
     align-items: center;
