@@ -31,7 +31,7 @@ h1, h2, h3, h4, h5, h6{
 #target-container{
     display: inline-flex;
     flex-direction: row;
-    height: 10vh;
+    height: 50%;
 }
 
 .target{
@@ -48,7 +48,7 @@ h1, h2, h3, h4, h5, h6{
     width: 100%;
     bottom: env(safe-area-inset-bottom);
     background-color: var(--topbottom);
-    height: auto;
+    height: 150px;
     align-items: center;
     justify-content: center;
     flex-direction: column;
@@ -59,7 +59,7 @@ h1, h2, h3, h4, h5, h6{
     position: fixed;
     top:0;
     width: 100%;
-    height: 7vh;
+    height: 50px;
     background-color: var(--topbottom);
     flex-direction: column;
     justify-content: center;
@@ -67,15 +67,15 @@ h1, h2, h3, h4, h5, h6{
 }
 
 #chain-container{
-    height: 100%;
+    position: absolute;
+    height: calc(100vh - 200px);
     display: flex;
+    top: 50px;
     flex-direction: column;
     align-items: center;
-    padding-top: 7vh;
     color: var(--text);
     overflow-y: scroll;
     width: 100%;
-    padding-bottom: 1000px;
 }
 
 .chain_element{
@@ -138,7 +138,8 @@ h1, h2, h3, h4, h5, h6{
 
 #input-container{
     display: flex;
-    height: 10vh;
+    /*height: 10vh;*/
+    height: 50%;
     width: 60vw;
     flex-direction: row;
     z-index: 1;
@@ -164,8 +165,8 @@ h1, h2, h3, h4, h5, h6{
     border: 0;
     padding: 0;
     border-radius: 25px;
-    /*color: var(--text);*/
-    color: red;
+    color: var(--text);
+    /*color: red;*/
     background-color: var(--button);
     font-size: 5vh;
     font-weight: bold;
@@ -218,11 +219,11 @@ h1, h2, h3, h4, h5, h6{
 #howto_button{
     right: 1vw;
     background-color: var(--button);
-    border-radius: 2vh;
-    height: 4vh;
-    width: 4vh;
+    border-radius: 20px;
+    aspect-ratio: 1/1;
+    height: 40px;
     font-weight: bold;
-    font-size: 3vh;
+    font-size: 30px;
     border: 0;
     color: var(--text);
     position: fixed;
