@@ -165,7 +165,7 @@ h1, h2, h3, h4, h5, h6{
     border-radius: 25px;
     color: var(--text);
     background-color: var(--button);
-    font-size: 50px;
+    font-size: 5vh;
     font-weight: bold;
     height: 100%;
     aspect-ratio: 1/1;
