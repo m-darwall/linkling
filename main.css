@@ -32,6 +32,7 @@ h1, h2, h3, h4, h5, h6{
     display: inline-flex;
     flex-direction: row;
     height: 50%;
+    padding-bottom: 10px;
 }
 
 .target{
@@ -48,7 +49,7 @@ h1, h2, h3, h4, h5, h6{
     width: 100%;
     bottom: env(safe-area-inset-bottom);
     background-color: var(--topbottom);
-    height: 150px;
+    height: auto;
     align-items: center;
     justify-content: center;
     flex-direction: column;
@@ -138,11 +139,12 @@ h1, h2, h3, h4, h5, h6{
 
 #input-container{
     display: flex;
-    /*height: 10vh;*/
-    height: 50%;
-    width: 60vw;
+    justify-content: center;
+    height: 7dvh;
+    width: 100%;
     flex-direction: row;
     z-index: 1;
+    padding-bottom: 10px;
 }
 
 #input-form{
@@ -150,7 +152,7 @@ h1, h2, h3, h4, h5, h6{
 }
 
 #input-box{
-    width: 80%;
+    width: 40%;
     height: 100%;
     border: 0;
     border-radius: 25px;
@@ -159,7 +161,44 @@ h1, h2, h3, h4, h5, h6{
     margin-right: 5px;
     font-size: 25px;
     text-align: center;
+    pointer-events: none;
 }
+
+#keyboard-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: var(--topbottom);
+    justify-content: flex-end;
+}
+
+.keyboard_row{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 30%;
+    justify-content: center;
+}
+
+.keyboard_key{
+    width: 9%;
+    border-radius: 25px;
+    color: var(--text);
+    background-color: var(--button);
+    font-size: 5vh;
+    font-weight: bold;
+    aspect-ratio: 1 / 1;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2px;
+}
+
+.pressed_key{
+    background-color: var(--input);
+}
+
 
 .button{
     border: 0;
@@ -251,7 +290,18 @@ h1, h2, h3, h4, h5, h6{
     #howto{
         width: 90%;
     }
-    #bottom{
-        height: 100px;
+}
+
+/*when screen is wider than 1000px*/
+@media screen and (min-width: 1000px) {
+    .keyboard_key{
+        max-width: 50px;
+    }
+}
+
+/*query for there being a mouse or touchpad*/
+@media (hover: hover) and (pointer: fine) {
+    #keyboard-container{
+        display: none;
     }
 }

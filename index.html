@@ -19,9 +19,44 @@
     <button id="undo-button" class="button">↺</button>
     <label for="input-box"></label>
     <form id="input-form" autocomplete="off">
-        <input autofocus type="text" id="input-box">
+        <input type="text" id="input-box">
     </form>
     <button id="submit-button" class="button">↵</button>
+</div>
+<div id="keyboard-container">
+    <div id="keyboard-first-row" class="keyboard_row">
+        <div id="letter_q" class="keyboard_key">q</div>
+        <div id="letter_w" class="keyboard_key">w</div>
+        <div id="letter_e" class="keyboard_key">e</div>
+        <div id="letter_r" class="keyboard_key">r</div>
+        <div id="letter_t" class="keyboard_key">t</div>
+        <div id="letter_y" class="keyboard_key">y</div>
+        <div id="letter_u" class="keyboard_key">u</div>
+        <div id="letter_i" class="keyboard_key">i</div>
+        <div id="letter_o" class="keyboard_key">o</div>
+        <div id="letter_p" class="keyboard_key">p</div>
+    </div>
+    <div id="keyboard-second-row" class="keyboard_row">
+        <div id="letter_a" class="keyboard_key">a</div>
+        <div id="letter_s" class="keyboard_key">s</div>
+        <div id="letter_d" class="keyboard_key">d</div>
+        <div id="letter_f" class="keyboard_key">f</div>
+        <div id="letter_g" class="keyboard_key">g</div>
+        <div id="letter_h" class="keyboard_key">h</div>
+        <div id="letter_j" class="keyboard_key">j</div>
+        <div id="letter_k" class="keyboard_key">k</div>
+        <div id="letter_l" class="keyboard_key">l</div>
+    </div>
+    <div id="keyboard-third-row" class="keyboard_row">
+        <div id="letter_z" class="keyboard_key">z</div>
+        <div id="letter_x" class="keyboard_key">x</div>
+        <div id="letter_c" class="keyboard_key">c</div>
+        <div id="letter_v" class="keyboard_key">v</div>
+        <div id="letter_b" class="keyboard_key">b</div>
+        <div id="letter_n" class="keyboard_key">n</div>
+        <div id="letter_m" class="keyboard_key">m</div>
+        <div id="backspace" class="keyboard_key">⌫</div>
+    </div>
 </div>
 </div>
 <div id="success" class="popup">
@@ -42,25 +77,7 @@
 <script src="linkling.js"></script>
 <script>
     setup('words.txt');
-    const bottomEl = document.getElementById('bottom');
-
-    function update() {
-    if (!bottomEl) return;
-    const vv = window.visualViewport;
-    if (!vv) return;
-
-    // Visual viewport height shrinks when keyboard is open
-    const keyboardHeight = Math.max(0, window.innerHeight - vv.height);
-
-    // Push the entire #bottom up by exactly the keyboard height
-    bottomEl.style.bottom = keyboardHeight + 'px';
-}
-
-    window.addEventListener('resize', update);
-    window.visualViewport?.addEventListener('resize', update);
-    window.visualViewport?.addEventListener('scroll', update);
-
-    update();
+    setup_keyboard();
 </script>
 </body>
 </html>

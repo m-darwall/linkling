@@ -337,3 +337,35 @@ async function setup(wordlist){
     }
 }
 
+function flash_key(key){
+    key.classList.add("pressed_key");
+    setTimeout(function (){
+        key.classList.remove("pressed_key");
+    }, 200)
+}
+
+function setup_keyboard(){
+    for(let i=0; i<26;i++){
+        let current_letter = "qwertyuiopasdfghjklzxcvbnm"[i];
+        let key = document.getElementById("letter_"+current_letter);
+        key.onclick = function(){
+            let input = document.getElementById("input-box");
+            input.value = input.value + current_letter;
+            flash_key(key)
+        };
+        document.getElementById("backspace").onclick = function(){
+            let input = document.getElementById("input-box");
+            input.value = input.value.slice(0, -1);
+            flash_key(document.getElementById("backspace"));
+        }
+    }
+    document.onkeydown = function(e){
+        if(e.key.length === 1 && e.key.toLowerCase().match(/[a-z]/i)){
+            document.getElementById("input-box").value += e.key.toLowerCase();
+        }
+        if(e.key === "Backspace"){
+            let input = document.getElementById("input-box");
+            input.value = input.value.slice(0, -1);
+        }
+    }
+}
