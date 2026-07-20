@@ -315,12 +315,25 @@ async function setup(wordlist){
         document.getElementById("target-container").appendChild(section);
     }
 
-    document.getElementById("input-form").addEventListener("submit", (e) =>{
-        e.preventDefault();
-        chain.addWord(document.getElementById("input-box").value);
-        document.getElementById("input-box").value = "";
+    // document.getElementById("input-form").addEventListener("submit", (e) =>{
+    //     e.preventDefault();
+    //     chain.addWord(document.getElementById("input-box").value);
+    //     document.getElementById("input-box").value = "";
+    //     }
+    // )
+    document.onkeydown = function(e){
+        if(e.key.length === 1 && e.key.toLowerCase().match(/[a-z]/i)){
+            document.getElementById("input-box").value += e.key.toLowerCase();
         }
-    )
+        if(e.key === "Backspace"){
+            let input = document.getElementById("input-box");
+            input.value = input.value.slice(0, -1);
+        }
+        if(e.key === "Enter"){
+            chain.addWord(document.getElementById("input-box").value);
+            document.getElementById("input-box").value = "";
+        }
+    }
 
     document.getElementById("submit-button").onclick = function(){
         chain.addWord(document.getElementById("input-box").value);
@@ -359,13 +372,5 @@ function setup_keyboard(){
             flash_key(document.getElementById("backspace"));
         }
     }
-    document.onkeydown = function(e){
-        if(e.key.length === 1 && e.key.toLowerCase().match(/[a-z]/i)){
-            document.getElementById("input-box").value += e.key.toLowerCase();
-        }
-        if(e.key === "Backspace"){
-            let input = document.getElementById("input-box");
-            input.value = input.value.slice(0, -1);
-        }
-    }
+
 }
