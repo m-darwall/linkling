@@ -150,6 +150,7 @@ h1, h2, h3, h4, h5, h6{
 }
 
 #input-box{
+    font-family: "Ubuntu Mono", monospace;
     width: 40%;
     height: 100%;
     border: 0;
