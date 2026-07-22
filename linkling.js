@@ -224,17 +224,19 @@ function generatePuzzle(words, even_words, target_length, seed){
             let current_targets = current[2]
             if(explored.size > 1){
                 current_targets = current[2].filter(function(word){
-                    return word.includes(current_word.slice(-2)) !== false;
+                    return word[current_available.length - 1] === current_word.slice(-2)
+                    // return word.includes(current_word.slice(-2));
                 })
+                if(current_targets.length === 0){
+                    continue;
+                }
             }
-            let available_words = []
+
             if(current_available.length === target_length){
-                available_words = checkForWord(current_available, current_targets);
+                target = current_targets[0];
+                return [start, target, current_path];
             }
-            if(available_words.length > 0){
-                target = available_words[0]
-                return [start, target, current_path]
-            }
+
             if(current_path.length - 1 < target_length){
                 let required = getRequiredPairs(current_targets, current_available);
                 for(let i=0;i<words.length;i++){
@@ -242,7 +244,7 @@ function generatePuzzle(words, even_words, target_length, seed){
                     if(required.has(word.slice(-2)) === false || explored.has(word)){
                         continue;
                     }
-                    if(checkOverlap(current_word, word) !== false){
+                    if(checkOverlap(current_word, word)){
                         explored.add(word)
                         frontier.unshift([word, [...current_path, word], current_targets])
                     }
@@ -254,10 +256,9 @@ function generatePuzzle(words, even_words, target_length, seed){
 }
 
 function getRequiredPairs(possible_targets, current_available){
-
-    let needed = new Set(possible_targets.flat())
-    for(let i = 0; i < current_available.length; i++){
-        needed.delete(current_available[i]);
+    let needed = new Set();
+    for(let i = 0; i < possible_targets.length; i++){
+        needed.add(possible_targets[i][current_available.length]);
     }
     return needed
 }
@@ -290,10 +291,6 @@ function checkOverlap(first, second){
     return false;
 }
 
-function checkForWord(word, wordlist){
-    let checker = (candidate) => candidate.every(v => word.includes(v));
-    return wordlist.filter(checker);
-}
 
 
 async function setup(wordlist){
@@ -315,12 +312,6 @@ async function setup(wordlist){
         document.getElementById("target-container").appendChild(section);
     }
 
-    // document.getElementById("input-form").addEventListener("submit", (e) =>{
-    //     e.preventDefault();
-    //     chain.addWord(document.getElementById("input-box").value);
-    //     document.getElementById("input-box").value = "";
-    //     }
-    // )
     document.onkeydown = function(e){
         if(e.key.length === 1 && e.key.toLowerCase().match(/[a-z]/i)){
             document.getElementById("input-box").value += e.key.toLowerCase();
