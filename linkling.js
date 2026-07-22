@@ -88,6 +88,15 @@ class Chain{
         optimum_text.innerHTML = "Computer's solution:<br>" + this.optimum.join(" -> ");
         optimum_text.id = "optimum_text";
         success_popup.appendChild(optimum_text);
+        let random_game = document.createElement("button")
+        random_game.id = "random_game_button";
+        random_game.innerText = "play a random game";
+        random_game.addEventListener("click", function(){
+            const url = new URL(window.location.href);
+            url.searchParams.set("game", Math.floor(Math.random()*100000).toString());
+            window.location.href = url.toString();
+        })
+        success_popup.appendChild(random_game);
     }
 
     add_chain_element(word, overlap_end, unlocker){
@@ -308,11 +317,19 @@ async function setup(wordlist){
     let even_words = words.filter(function(word){
         return word.length % 2 === 0;
     })
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    let yyyy = today.getFullYear();
-    let puzzle = generatePuzzle(words, even_words, 5, parseInt(dd+mm+yyyy));
+    let seed = 0;
+    let game = new URLSearchParams(window.location.search).get("game");
+    console.log(new URLSearchParams(window.location.search));
+    if(game){
+        seed = parseInt(game);
+    } else {
+        let today = new Date();
+        let dd = String(today.getDate()).padStart(2, '0');
+        let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        let yyyy = today.getFullYear();
+        seed = parseInt(dd+mm+yyyy)
+    }
+    let puzzle = generatePuzzle(words, even_words, 5, seed);
     let chain = new Chain(words, ...puzzle);
     for(let i = 0; i < puzzle[1].length; i++){
         let section = document.createElement("h3");

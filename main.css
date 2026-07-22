@@ -201,6 +201,10 @@ h1, h2, h3, h4, h5, h6{
     background-color: var(--input);
 }
 
+button{
+    font-family: "Ubuntu Mono", monospace;
+}
+
 
 .button{
     border: 0;
@@ -257,6 +261,14 @@ h1, h2, h3, h4, h5, h6{
     margin: 20px auto auto;
 }
 
+#random_game_button{
+    width: 10vw;
+    background-color: var(--button);
+    border-radius: 25px;
+    padding: 5px;
+    margin: 20px auto auto;
+}
+
 #howto_button{
     right: 1vw;
     background-color: var(--button);
@@ -280,7 +292,7 @@ h1, h2, h3, h4, h5, h6{
     .button{
         width: 20%;
     }
-    #share_button {
+    #share_button, #random_game_button{
         width: 50vw;
     }
 }
