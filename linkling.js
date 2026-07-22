@@ -75,7 +75,7 @@ class Chain{
         chain_text.id = "chain_text";
         success_popup.appendChild(chain_text);
         let optimum_text = document.createElement("h5");
-        optimum_text.innerHTML = "Possible shortest solution:<br>" + this.optimum.join(" -> ");
+        optimum_text.innerHTML = "Computer's optimal solution:<br>" + this.optimum.join(" -> ");
         optimum_text.id = "optimum_text";
         success_popup.appendChild(optimum_text);
     }
