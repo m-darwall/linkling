@@ -35,7 +35,8 @@ class Chain{
     complete(){
         let success_popup = document.getElementById('success');
         success_popup.style.display = 'flex';
-        let score = this.elements.length + this.undo_count - 1;
+        let score = 0;
+        let max_score = 20*this.target.length;
         let point_breakdown = []
         let emoji = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"]
         let emoji_summary = ""
@@ -47,25 +48,24 @@ class Chain{
             }
         }
         point_breakdown.push(emoji_summary);
-        point_breakdown.push("words: +" + (this.elements.length - 1).toString());
-        point_breakdown.push("undos: +" + (this.undo_count).toString());
-        let combo = 0;
+        point_breakdown.push("unlocked pairs: +" + this.target.length + " x 10");
+        score += this.target.length*10;
+        point_breakdown.push("unnecessary words: -" + (this.elements.length - 1 - this.found.length).toString() + " x 10");
+        score -= 10*(this.elements.length - 1 - this.found.length)
+        point_breakdown.push("undos: -" + (this.undo_count).toString() + " x 10");
+        score -= 10*(this.undo_count)
         if(this.elements.length - 1 === this.target.length){
-            combo++;
-            point_breakdown.push("minimal: -" + this.target.length.toString());
-            score -= this.target.length;
+            point_breakdown.push("minimal: +" + 5*this.target.length.toString());
+            score += this.target.length*5;
         }
         if(this.target.join("") === this.found.join("")){
-            combo++;
-            point_breakdown.push("in order: -" + this.target.length.toString());
-            score -= this.target.length;
+            point_breakdown.push("in order: +" + 5*this.target.length.toString());
+            score += this.target.length*5;
         }
-        if(combo === 2){
-            point_breakdown.push("Perfection! -1");
-            score -= 1;
+        point_breakdown.push("score: " + score + "/" + max_score);
+        if(score === max_score){
+            point_breakdown.push("perfect!")
         }
-        point_breakdown.push("score: " + score);
-        point_breakdown.push("(the lower the better)")
         for(let i = 0; i < point_breakdown.length; i++){
             let summary_element = document.createElement("h4")
             summary_element.innerText = point_breakdown[i];
