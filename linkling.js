@@ -37,6 +37,16 @@ class Chain{
         success_popup.style.display = 'flex';
         let score = this.elements.length + this.undo_count - 1;
         let point_breakdown = []
+        let emoji = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"]
+        let emoji_summary = ""
+        for(let i = 1; i < this.elements.length; i++){
+            if(this.target.includes(this.elements[i].slice(-2))){
+                emoji_summary += emoji[this.target.indexOf(this.elements[i].slice(-2))];
+            }else{
+                emoji_summary += "⬜"
+            }
+        }
+        point_breakdown.push(emoji_summary);
         point_breakdown.push("words: +" + (this.elements.length - 1).toString());
         point_breakdown.push("undos: +" + (this.undo_count).toString());
         let combo = 0;
