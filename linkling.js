@@ -71,11 +71,11 @@ class Chain{
         })
         success_popup.appendChild(share_button);
         let chain_text = document.createElement("h5");
-        chain_text.innerText = this.elements.join(" -> ");
+        chain_text.innerHTML = "Your solution:<br>" + this.elements.join(" -> ");
         chain_text.id = "chain_text";
         success_popup.appendChild(chain_text);
         let optimum_text = document.createElement("h5");
-        optimum_text.innerHTML = "Computer's optimal solution:<br>" + this.optimum.join(" -> ");
+        optimum_text.innerHTML = "Computer's solution:<br>" + this.optimum.join(" -> ");
         optimum_text.id = "optimum_text";
         success_popup.appendChild(optimum_text);
     }
