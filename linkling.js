@@ -317,7 +317,6 @@ async function setup(wordlist){
     let even_words = words.filter(function(word){
         return word.length % 2 === 0;
     })
-    let seed = 0;
     let game = new URLSearchParams(window.location.search).get("game");
     console.log(new URLSearchParams(window.location.search));
     if(game){
