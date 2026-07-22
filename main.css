@@ -13,9 +13,8 @@ body{
     background-color: var(--back);
     display: flex;
     flex-direction: column;
-    /*justify-content: center;*/
-    align-items: stretch;
-    /*justify-items: center;*/
+    justify-content: center;
+    align-items: center;
     height: 100dvh;
 }
 
@@ -218,20 +217,20 @@ h1, h2, h3, h4, h5, h6{
 
 .popup{
     display: none;
-    position: fixed;
+    position: absolute;
     flex-direction: column;
     background-color: var(--topbottom);
     width: 40vw;
     border-radius: 25px;
     box-shadow: -7px 6px 20px 1px;
-    box-shadow-color: var(--button);
     color: var(--text);
-    padding: 3vw;
-    overflow-y: scroll;
+    padding: 40px;
+    overflow-y: auto;
+    z-index: 3;
+    max-height: 80vh;
 }
 
 #howto{
-    max-height: 90vh;
     width: 50vw;
 }
 
@@ -287,11 +286,9 @@ h1, h2, h3, h4, h5, h6{
 }
 
 @media screen and (max-width: 800px) {
-    #success{
-        width: 90%;
-    }
-    #howto{
-        width: 90%;
+    #success, #howto{
+        width: calc(90vw - 80px);
+
     }
 }
 
