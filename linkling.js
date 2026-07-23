@@ -119,9 +119,11 @@ class Chain{
         if(score === max_score){
             point_breakdown.push("perfect!")
         }
+        let share_text = "Linkling";
         if(this.seed === format_date(0)){
             let streak = this.checkStreak();
             point_breakdown.push("streak: " + streak);
+            share_text += " " + new Date().toDateString();
         }
         for(let i = 0; i < point_breakdown.length; i++){
             let summary_element = document.createElement("h4")
@@ -129,7 +131,7 @@ class Chain{
             summary_element.classList.add("summary_element");
             success_popup.appendChild(summary_element);
         }
-        let share_text = "Linkling " + new Date().toDateString() + ":\n" + point_breakdown.join("\n") + "\n" + window.location.href;
+        share_text += ":\n" + point_breakdown.join("\n") + "\n" + window.location.href;
         let share_button = document.createElement("button");
         share_button.innerText = "share";
         share_button.id = "share_button";
