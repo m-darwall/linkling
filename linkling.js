@@ -335,6 +335,13 @@ function checkOverlap(first, second){
     return false;
 }
 
+function redirectToToday(){
+    const url = new URL(window.location.href);
+    const params = new URLSearchParams(url.search)
+    params.delete("game");
+    url.search = params.toString();
+    window.location.href = url.toString();
+}
 
 
 async function setup(wordlist){
