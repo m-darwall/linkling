@@ -9,7 +9,6 @@ class Chain{
         this.optimum = found_path;
         this.seed = seed;
         this.history = []
-        this.salvageState();
     }
 
     storeLocally() {
@@ -372,6 +371,7 @@ async function setup(wordlist){
         section.classList.add("section_" + puzzle[1][i])
         document.getElementById("target-container").appendChild(section);
     }
+    chain.salvageState()
 
     document.onkeydown = function(e){
         if(e.key.length === 1 && e.key.toLowerCase().match(/[a-z]/i)){
