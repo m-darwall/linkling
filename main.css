@@ -239,6 +239,15 @@ button{
     width: 50vw;
 }
 
+#goto_today{
+    display: none;
+    position: absolute;
+    font-size: 18px;
+    height: 40px;
+    width: 110px;
+    left: 0;
+}
+
 .close{
     background-color: transparent;
     color: var(--text);
@@ -271,7 +280,7 @@ button{
 }
 
 #howto_button{
-    right: 1vw;
+    right: 0;
     background-color: var(--button);
     border-radius: 20px;
     aspect-ratio: 1/1;
