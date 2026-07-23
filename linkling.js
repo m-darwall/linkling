@@ -352,13 +352,7 @@ async function setup(wordlist){
     let seed;
     let game = new URLSearchParams(window.location.search).get("game");
     let goto_today = document.getElementById("goto_today")
-    goto_today.addEventListener("click", function(){
-        const url = new URL(window.location.href);
-        const params = new URLSearchParams(url.search)
-        params.delete("game");
-        url.search = params.toString();
-        window.location.href = url.toString();
-    })
+    goto_today.addEventListener("click", redirectToToday);
     if(game){
         seed = parseInt(game);
         goto_today.style.display = "flex";
