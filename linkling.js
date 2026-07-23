@@ -41,6 +41,24 @@ class Chain{
         localStorage.setItem("completed", JSON.stringify(completed));
     }
 
+    checkStreak(){
+        let completed = localStorage.getItem("completed");
+        if(completed === false){
+            return false;
+        }
+        completed = JSON.parse(completed);
+        let streak = 0;
+        while(1===1){
+            let date = format_date(-streak);
+            if(completed.includes(date)){
+                streak++;
+            } else{
+                break;
+            }
+        }
+        return streak;
+    }
+
     addWord(word){
         word = word.replace(/[^a-zA-Z]/g, "").toLowerCase();
         let check = this.checkGuess(word);
@@ -100,6 +118,10 @@ class Chain{
         point_breakdown.push("score: " + score + "/" + max_score);
         if(score === max_score){
             point_breakdown.push("perfect!")
+        }
+        if(this.seed === format_date(0)){
+            let streak = this.checkStreak();
+            point_breakdown.push("streak: " + streak);
         }
         for(let i = 0; i < point_breakdown.length; i++){
             let summary_element = document.createElement("h4")
