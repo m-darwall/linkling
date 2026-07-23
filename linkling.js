@@ -381,11 +381,7 @@ async function setup(wordlist){
         }
         goto_today.style.display = "flex";
     } else {
-        let today = new Date();
-        let dd = String(today.getDate()).padStart(2, '0');
-        let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        let yyyy = today.getFullYear();
-        seed = parseInt(dd+mm+yyyy)
+        seed = format_date(0)
     }
     let puzzle = generatePuzzle(words, even_words, 5, seed);
     let chain = new Chain(words, ...puzzle, seed);
