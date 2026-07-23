@@ -355,6 +355,9 @@ async function setup(wordlist){
     goto_today.addEventListener("click", redirectToToday);
     if(game){
         seed = parseInt(game);
+        if(isNaN(seed)){
+            redirectToToday();
+        }
         goto_today.style.display = "flex";
     } else {
         let today = new Date();
