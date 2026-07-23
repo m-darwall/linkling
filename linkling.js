@@ -1,5 +1,5 @@
 class Chain{
-    constructor(words, starter, target, found_path){
+    constructor(words, starter, target, found_path, seed){
         this.elements = [starter];
         this.add_chain_element(starter, 0, false)
         this.target = target;
@@ -7,6 +7,28 @@ class Chain{
         this.words = words;
         this.undo_count = 0;
         this.optimum = found_path;
+        this.seed = seed;
+        this.history = []
+        this.salvageState();
+    }
+
+    storeLocally() {
+        localStorage.setItem(this.seed.toString(), JSON.stringify(this.history));
+    }
+
+    salvageState(){
+        let history = localStorage.getItem(this.seed.toString());
+        if(history){
+            history = JSON.parse(history);
+            for(let i=0; i<history.length;i++){
+                if(history[i] === -1){
+                    this.undo()
+                }else{
+                    this.addWord(history[i]);
+                }
+            }
+            this.history = history;
+        }
     }
 
     addWord(word){
@@ -14,6 +36,8 @@ class Chain{
         let check = this.checkGuess(word);
         if (check !== false){
             this.elements.push(word);
+            this.history.push(word);
+            this.storeLocally()
             if(this.target.includes(word.slice(-2))){
                 this.add_chain_element(word, check, true);
                 this.found.push(word.slice(-2));
@@ -162,6 +186,8 @@ class Chain{
         if(this.elements.length <= 1){
             return false;
         }
+        this.history.push(-1)
+        this.storeLocally()
         document.getElementById("chain_element_" + this.elements.length).remove();
         let latest = this.elements.pop()
 
@@ -338,7 +364,7 @@ async function setup(wordlist){
         seed = parseInt(dd+mm+yyyy)
     }
     let puzzle = generatePuzzle(words, even_words, 5, seed);
-    let chain = new Chain(words, ...puzzle);
+    let chain = new Chain(words, ...puzzle, seed);
     for(let i = 0; i < puzzle[1].length; i++){
         let section = document.createElement("h3");
         section.innerText = puzzle[1][i];
