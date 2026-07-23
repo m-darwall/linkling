@@ -408,6 +408,7 @@ async function setup(wordlist){
         seed = format_date(0)
     }
     let puzzle = generatePuzzle(words, even_words, 5, seed);
+    document.getElementById("loading").style.display = "none"; // remove loading indicator when puzzle has generated
     let chain = new Chain(words, ...puzzle, seed);
     for(let i = 0; i < puzzle[1].length; i++){
         let section = document.createElement("h3");

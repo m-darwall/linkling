@@ -124,6 +124,10 @@ h1, h2, h3, h4, h5, h6{
     animation-delay: 0s, 1.1s;
 }
 
+#loading{
+    animation: shake 0.5s linear infinite;
+}
+
 @keyframes shake {
     0% { transform: rotate(0deg); }
     25% { transform: rotate(3deg); }
