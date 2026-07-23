@@ -197,7 +197,6 @@ class Chain{
             if(this.found.includes(latest.slice(-2)) === false){
                 let to_edit = document.getElementsByClassName("section_" + latest.slice(-2))
                 for(let i = 0; i < to_edit.length; i++){
-                    // to_edit[i].style.color = "#cfe0c3ff";
                     to_edit[i].classList.remove("unlocked")
                 }
             }
