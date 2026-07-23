@@ -305,6 +305,12 @@ button{
     #share_button, #random_game_button{
         width: 50vw;
     }
+    #goto_today{
+        width: 70px;
+        font-size: 13px;
+        flex-wrap: wrap;
+        align-content: center;
+    }
 }
 
 @media screen and (max-width: 800px) {
