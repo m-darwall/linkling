@@ -83,7 +83,7 @@ class Chain{
             }
         }
         point_breakdown.push(emoji_summary);
-        point_breakdown.push("unlocked pairs: +" + this.target.length + " x 10");
+        point_breakdown.push("unlocked: +" + this.target.length + " x 10");
         score += this.target.length*10;
         point_breakdown.push("excess words: -" + (this.elements.length - 1 - this.found.length).toString() + " x 10");
         score -= 10*(this.elements.length - 1 - this.found.length)
