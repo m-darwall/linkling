@@ -30,6 +30,17 @@ class Chain{
         }
     }
 
+    updateCompleted(){
+        let completed = localStorage.getItem("completed");
+        if(completed){
+            completed = JSON.parse(completed);
+            completed.push(this.seed)
+        }else{
+            completed = [this.seed]
+        }
+        localStorage.setItem("completed", JSON.stringify(completed));
+    }
+
     addWord(word){
         word = word.replace(/[^a-zA-Z]/g, "").toLowerCase();
         let check = this.checkGuess(word);
@@ -56,6 +67,7 @@ class Chain{
     }
 
     complete(){
+        this.updateCompleted()
         let success_popup = document.getElementById('success');
         success_popup.style.display = 'flex';
         let score = 0;
