@@ -215,6 +215,19 @@ button{
 }
 
 
+#undo-button{
+    position: relative;
+}
+
+#undo_warning{
+    position: absolute;
+    color: var(--back);
+    font-size: 16px;
+    top: 10%;
+    right: 10%;
+}
+
+
 .button{
     border: 0;
     padding: 0;
