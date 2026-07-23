@@ -101,11 +101,11 @@ class Chain{
             }
         }
         point_breakdown.push(emoji_summary);
-        point_breakdown.push("unlocked: +" + this.target.length + " x 10");
+        point_breakdown.push("unlocked: +10 x " + this.target.length);
         score += this.target.length*10;
-        point_breakdown.push("excess words: -" + (this.elements.length - 1 - this.found.length).toString() + " x 10");
+        point_breakdown.push("excess words: -10 x " + (this.elements.length - 1 - this.found.length).toString());
         score -= 10*(this.elements.length - 1 - this.found.length)
-        point_breakdown.push("undos: -" + (this.undo_count).toString() + " x 10");
+        point_breakdown.push("undos: -10 x " + (this.undo_count).toString());
         score -= 10*(this.undo_count)
         if(this.elements.length - 1 === this.target.length){
             point_breakdown.push("minimal: +" + 5*this.target.length.toString());
