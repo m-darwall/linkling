@@ -43,7 +43,6 @@ class Chain{
                 this.found.push(word.slice(-2));
                 let to_edit = document.getElementsByClassName("section_" + word.slice(-2))
                 for(let i = 0; i < to_edit.length; i++){
-                    // to_edit[i].style.color = "green";
                     to_edit[i].classList.add("unlocked");
                 }
                 if(this.target.length === [...new Set(this.found)].length){
