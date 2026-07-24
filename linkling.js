@@ -439,6 +439,7 @@ async function setup(wordlist){
     }
     document.getElementById("undo-button").onclick = function(){
         chain.undo()
+        document.getElementById("undo-button").blur();
     }
     document.getElementById("howto_button").onclick = function(){
         document.getElementById("howto").style.display = "flex";
