@@ -292,12 +292,17 @@ button{
     margin: 20px auto auto;
 }
 
-#random_game_button{
-    width: 10vw;
+#navigator_box{
+    display: inline-flex;
+    justify-content: center;
+}
+
+.game_end_navigator{
+    width: 25%;
+    aspect-ratio: 2/1;
     background-color: var(--button);
     border-radius: 25px;
     padding: 5px;
-    margin: 20px auto auto;
 }
 
 #howto_button{
@@ -323,8 +328,11 @@ button{
     .button{
         width: 20%;
     }
-    #share_button, #random_game_button{
+    #share_button{
         width: 50vw;
+    }
+    #random_game_button, #today_game_finished{
+        width: 25vw;
     }
     #goto_today{
         width: 70px;

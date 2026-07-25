@@ -147,15 +147,27 @@ class Chain{
         optimum_text.innerHTML = "Computer's solution:<br>" + this.optimum.join(" -> ");
         optimum_text.id = "optimum_text";
         success_popup.appendChild(optimum_text);
+        let navigator_box = document.createElement("div");
+        navigator_box.id = "navigator_box";
+        success_popup.appendChild(navigator_box);
+        if(this.checkStreak() === 0){
+            let today_game = document.createElement("button");
+            today_game.id = "today_game_finished";
+            today_game.innerText = "today's game";
+            today_game.classList.add("game_end_navigator");
+            today_game.addEventListener("click", redirectToToday)
+            navigator_box.appendChild(today_game);
+        }
         let random_game = document.createElement("button")
         random_game.id = "random_game_button";
         random_game.innerText = "play a random game";
+        random_game.classList.add("game_end_navigator");
         random_game.addEventListener("click", function(){
             const url = new URL(window.location.href);
             url.searchParams.set("game", Math.floor(Math.random()*100000).toString());
             window.location.href = url.toString();
         })
-        success_popup.appendChild(random_game);
+        navigator_box.appendChild(random_game);
     }
 
     add_chain_element(word, overlap_end, unlocker){
