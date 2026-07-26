@@ -5,7 +5,9 @@ class Chain{
         this.target = target;
         this.found = [];
         this.words = words;
+        console.log(words)
         this.words_check = words_check;
+        console.log(words_check);
         this.undo_count = 0;
         this.optimum = found_path;
         this.seed = seed;
@@ -266,7 +268,7 @@ class Chain{
 async function getWords(wordlist){
     let data = await fetch(wordlist);
     let words = await data.text();
-    words = words.split("\r\n").slice(26, -1);
+    words = words.split(/[\r\n]+/).slice(26, -1);
     for (let i = 0; i < words.length; i++) {
         words[i] = words[i].replace(/[^a-zA-Z0-9]/g, "");
     }
@@ -404,7 +406,7 @@ function format_date(offset){
 
 async function setup(wordlist, wordlist2){
     let words = await getWords(wordlist);
-    let words2 = await getWords(wordlist2)
+    let words2 = await getWords(wordlist2);
     let even_words = words.filter(function(word){
         return word.length % 2 === 0;
     })
