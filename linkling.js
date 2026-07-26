@@ -1,3 +1,5 @@
+// last time words.txt was updated and therefore continuity was broken
+let last_word_update = "26072026";
 class Chain{
     constructor(words, words_check, starter, target, found_path, seed){
         this.elements = [starter];
@@ -5,17 +7,29 @@ class Chain{
         this.target = target;
         this.found = [];
         this.words = words;
-        console.log(words)
         this.words_check = words_check;
-        console.log(words_check);
         this.undo_count = 0;
         this.optimum = found_path;
         this.seed = seed;
         this.history = []
+        this.checkCorruption()
     }
 
     storeLocally() {
         localStorage.setItem(this.seed.toString(), JSON.stringify(this.history));
+    }
+
+    checkCorruption(){
+        let started = localStorage.getItem("started");
+        if(started){
+            if(compareDates(started, last_word_update)){
+                localStorage.clear()
+                localStorage.setItem("started", format_date(0).toString());
+            }
+        }else{
+            localStorage.clear();
+            localStorage.setItem("started", format_date(0).toString())
+        }
     }
 
     salvageState(){
@@ -349,6 +363,27 @@ function generatePuzzle(words, even_words, target_length, seed){
         }
     }
 }
+
+// returns true if date1 is before date2. date strings in ddmmyyyy format
+function compareDates(date1, date2) {
+    const d1 = {
+        day: Number(date1.slice(0, 2)),
+        month: Number(date1.slice(2, 4)) - 1,
+        year: Number(date1.slice(4))
+    };
+
+    const d2 = {
+        day: Number(date2.slice(0, 2)),
+        month: Number(date2.slice(2, 4)) - 1,
+        year: Number(date2.slice(4))
+    };
+
+    const dateObj1 = new Date(d1.year, d1.month, d1.day);
+    const dateObj2 = new Date(d2.year, d2.month, d2.day);
+
+    return dateObj1.getTime() < dateObj2.getTime();
+}
+
 
 function getRequiredPairs(possible_targets, current_available){
     let needed = new Set();
