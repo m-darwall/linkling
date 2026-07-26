@@ -5,4 +5,8 @@ A word game about chaining together words to unlock endings. You can play it [he
 
 ## third-party content
 the LICENSE file does not apply to the contents of the third-party directory.
-the third-party directory contains a word list derived from 3of6game.txt from the 12dicts set of word lists by Kevin Atkinson.
+the third-party directory contains: 
+- a word list derived from 3of6game.txt from the 12dicts set of word lists provided by Kevin Atkinson.
+- a word list derived from the [wordnik](https://github.com/wordnik/wordlist) wordlist provided by Erin McKean.
+
+their licenses are contained at the start of each file.
