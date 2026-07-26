@@ -24,7 +24,6 @@ special lists in order to help improve the overall quality of ESDB.
 
 ===
 
-a
 aah
 aardvark
 aardvarks
@@ -27813,7 +27812,6 @@ hysteria
 hysterical
 hysterically
 hysterics
-I
 iamb
 iambic
 iambs
@@ -37967,7 +37965,6 @@ nymphets
 nymphomaniacs
 nymphos
 nymphs
-O
 oaf
 oafish
 oafishly
