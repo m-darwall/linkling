@@ -1,10 +1,11 @@
 class Chain{
-    constructor(words, starter, target, found_path, seed){
+    constructor(words, words_check, starter, target, found_path, seed){
         this.elements = [starter];
         this.add_chain_element(starter, 0, false)
         this.target = target;
         this.found = [];
         this.words = words;
+        this.words_check = words_check;
         this.undo_count = 0;
         this.optimum = found_path;
         this.seed = seed;
@@ -216,7 +217,7 @@ class Chain{
     }
 
     checkGuess(guess){
-        if(!this.words.includes(guess)) {
+        if(!this.words_check.includes(guess)) {
             this.display_error("not in word list, sorry")
             return false;
         }
@@ -401,8 +402,9 @@ function format_date(offset){
     return parseInt(dd+mm+yyyy)
 }
 
-async function setup(wordlist){
+async function setup(wordlist, wordlist2){
     let words = await getWords(wordlist);
+    let words2 = await getWords(wordlist2)
     let even_words = words.filter(function(word){
         return word.length % 2 === 0;
     })
@@ -421,7 +423,7 @@ async function setup(wordlist){
     }
     let puzzle = generatePuzzle(words, even_words, 5, seed);
     document.getElementById("loading").style.display = "none"; // remove loading indicator when puzzle has generated
-    let chain = new Chain(words, ...puzzle, seed);
+    let chain = new Chain(words, words2, ...puzzle, seed);
     for(let i = 0; i < puzzle[1].length; i++){
         let section = document.createElement("h3");
         section.innerText = puzzle[1][i];
