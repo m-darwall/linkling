@@ -76,6 +76,10 @@ class Chain{
         return streak;
     }
 
+    getEndings(){
+        return this.elements.map(function(e){return e.slice(-2)})
+    }
+
     addWord(word){
         word = word.replace(/[^a-zA-Z]/g, "").toLowerCase();
         let check = this.checkGuess(word);
@@ -85,12 +89,14 @@ class Chain{
             this.storeLocally()
             if(this.target.includes(word.slice(-2))){
                 this.add_chain_element(word, check, true);
-                this.found.push(word.slice(-2));
+                if(this.found.includes(word.slice(-2)) === false){
+                    this.found.push(word.slice(-2));
+                }
                 let to_edit = document.getElementsByClassName("section_" + word.slice(-2))
                 for(let i = 0; i < to_edit.length; i++){
                     to_edit[i].classList.add("unlocked");
                 }
-                if(this.target.length === [...new Set(this.found)].length){
+                if(this.target.length === this.found.length){
                     this.complete();
                 }
             } else{
@@ -110,18 +116,22 @@ class Chain{
         let point_breakdown = []
         let emoji = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"]
         let emoji_summary = ""
+        let found = []
         for(let i = 1; i < this.elements.length; i++){
             if(this.target.includes(this.elements[i].slice(-2))){
-                emoji_summary += emoji[this.target.indexOf(this.elements[i].slice(-2))];
-            }else{
-                emoji_summary += "⬜"
+                if(false === found.includes(this.elements[i].slice(-2))){
+                    found.push(this.elements[i].slice(-2));
+                    emoji_summary += emoji[this.target.indexOf(this.elements[i].slice(-2))];
+                    continue;
+                }
             }
+            emoji_summary += "⬜"
         }
         point_breakdown.push(emoji_summary);
         point_breakdown.push("unlocked: +10 x " + this.target.length);
         score += this.target.length*10;
-        point_breakdown.push("excess words: -10 x " + (this.elements.length - 1 - this.found.length).toString());
-        score -= 10*(this.elements.length - 1 - this.found.length)
+        point_breakdown.push("excess words: -10 x " + (this.elements.length - 1 - this.target.length).toString());
+        score -= 10*(this.elements.length - 1 - this.target.length)
         point_breakdown.push("undos: -10 x " + (this.undo_count).toString());
         score -= 10*(this.undo_count)
         if(this.elements.length - 1 === this.target.length){
@@ -256,8 +266,16 @@ class Chain{
         let latest = this.elements.pop()
 
         if(this.target.includes(latest.slice(-2))){
-            this.found.pop()
-            if(this.found.includes(latest.slice(-2)) === false){
+            let endings = this.getEndings()
+            let counter = 0;
+            let ending;
+            for(ending of endings){
+                if(ending === latest.slice(-2)){
+                    counter++;
+                }
+            }
+            if(counter === 0){
+                this.found.pop()
                 let to_edit = document.getElementsByClassName("section_" + latest.slice(-2))
                 for(let i = 0; i < to_edit.length; i++){
                     to_edit[i].classList.remove("unlocked")
