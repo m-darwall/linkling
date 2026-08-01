@@ -12,6 +12,7 @@ class Chain{
         this.optimum = found_path;
         this.seed = seed;
         this.history = []
+        this.finished = false;
         this.checkCorruption()
     }
 
@@ -110,6 +111,7 @@ class Chain{
     }
 
     complete(){
+        this.finished = true;
         this.updateCompleted()
         let success_popup = document.getElementById('success');
         success_popup.style.display = 'flex';
@@ -491,6 +493,9 @@ async function setup(wordlist, wordlist2){
     chain.salvageState()
 
     document.onkeydown = function(e){
+        if(chain.finished){
+            return cancelInputs();
+        }
         if(e.key.length === 1 && e.key.toLowerCase().match(/[a-z]/i)){
             document.getElementById("input-box").value += e.key.toLowerCase();
         }
@@ -503,12 +508,17 @@ async function setup(wordlist, wordlist2){
             document.getElementById("input-box").value = "";
         }
     }
-
     document.getElementById("submit-button").onclick = function(){
+        if(chain.finished){
+            return cancelInputs();
+        }
         chain.addWord(document.getElementById("input-box").value);
         document.getElementById("input-box").value = "";
     }
     document.getElementById("undo-button").onclick = function(){
+        if(chain.finished){
+            return cancelInputs();
+        }
         chain.undo()
         document.getElementById("undo-button").blur();
     }
@@ -518,6 +528,13 @@ async function setup(wordlist, wordlist2){
     document.getElementById("close_howto").onclick =function (){
         document.getElementById("howto").style.display = "none";
     }
+}
+
+function cancelInputs(){
+    document.onkeydown = function(){return false}
+    document.getElementById("submit-button").onclick = function(){return false};
+    document.getElementById("undo-button").onclick = function(){return false};
+    return true;
 }
 
 function flash_key(key){
