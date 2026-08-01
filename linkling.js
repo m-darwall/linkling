@@ -24,11 +24,11 @@ class Chain{
         if(started){
             if(compareDates(started, last_word_update)){
                 localStorage.clear()
-                localStorage.setItem("started", format_date(0).toString());
+                localStorage.setItem("started", format_date(0));
             }
         }else{
             localStorage.clear();
-            localStorage.setItem("started", format_date(0).toString())
+            localStorage.setItem("started", format_date(0))
         }
     }
 
@@ -149,7 +149,7 @@ class Chain{
             point_breakdown.push("perfect!")
         }
         let share_text = "Linkling";
-        if(this.seed === format_date(0)){
+        if(this.seed === parseInt(format_date(0))){
             let streak = this.checkStreak();
             point_breakdown.push("streak: " + streak);
             share_text += " " + new Date().toDateString();
@@ -456,7 +456,7 @@ function format_date(offset){
     let dd = String(today.getDate()).padStart(2, '0');
     let mm = String(today.getMonth() + 1).padStart(2, '0');
     let yyyy = today.getFullYear();
-    return parseInt(dd+mm+yyyy)
+    return dd+mm+yyyy
 }
 
 async function setup(wordlist, wordlist2){
@@ -476,7 +476,7 @@ async function setup(wordlist, wordlist2){
         }
         goto_today.style.display = "flex";
     } else {
-        seed = format_date(0)
+        seed = parseInt(format_date(0))
     }
     let puzzle = generatePuzzle(words, even_words, 5, seed);
     document.getElementById("loading").style.display = "none"; // remove loading indicator when puzzle has generated
