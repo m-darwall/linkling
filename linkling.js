@@ -88,9 +88,11 @@ class Chain{
             this.history.push(word);
             this.storeLocally()
             if(this.target.includes(word.slice(-2))){
-                this.add_chain_element(word, check, true);
                 if(this.found.includes(word.slice(-2)) === false){
                     this.found.push(word.slice(-2));
+                    this.add_chain_element(word, check, true);
+                }else{
+                    this.add_chain_element(word, check, false);
                 }
                 let to_edit = document.getElementsByClassName("section_" + word.slice(-2))
                 for(let i = 0; i < to_edit.length; i++){
