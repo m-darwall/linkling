@@ -276,12 +276,11 @@ button{
 .close{
     background-color: transparent;
     color: var(--text);
-    font-size: 3vh;
-    width: 3vh;
+    font-size: 25px;
     border: 0;
-    right: 1vh;
+    right: 10px;
     position: absolute;
-    top: 1vh;
+    top: 10px;
 }
 
 .summary_element{
