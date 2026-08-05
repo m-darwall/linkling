@@ -81,6 +81,8 @@ h1, h2, h3, h4, h5, h6{
 
 .chain_element{
     font-size: 35px;
+    max-width: 100%;
+    overflow-x: auto;
 }
 
 .overlap_start{
