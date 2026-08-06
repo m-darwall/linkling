@@ -257,7 +257,7 @@ button{
     padding: 40px;
     overflow-y: auto;
     z-index: 3;
-    max-height: 80vh;
+    max-height: 80dvh;
 }
 
 #howto{
