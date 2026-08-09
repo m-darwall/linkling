@@ -171,11 +171,33 @@ class Chain{
         })
         success_popup.appendChild(share_button);
         let chain_text = document.createElement("h5");
-        chain_text.innerHTML = "Your solution:<br>" + this.elements.join(" -> ");
+        let searching_for = 0;
+        let found_at = []
+        for(let i = 0; i < this.elements.length; i++){
+            if(this.elements[i].slice(-2) === this.found[searching_for]){
+                found_at.push(i);
+                searching_for++;
+            }
+        }
+        let chain_string = this.elements.map(function(item, i){
+            if(found_at.includes(i)){
+                return item.slice(0, -2) + "<span class='unlocker_left'>" + item[item.length - 2] + "</span><span class='unlocker_right'>" + item[item.length - 1] + "</span>";
+            }
+            return item;
+        })
+        chain_text.innerHTML = "Your solution:<br>" + chain_string.join(" -> ");
         chain_text.id = "chain_text";
         success_popup.appendChild(chain_text);
+
+
         let optimum_text = document.createElement("h5");
-        optimum_text.innerHTML = "Computer's solution:<br>" + this.optimum.join(" -> ");
+        let optimum_string = this.optimum.map(function (item, index){
+            if(index === 0){
+                return item;
+            }
+            return item.slice(0, -2) + "<span class='unlocker_left'>" + item[item.length - 2] + "</span><span class='unlocker_right'>" + item[item.length - 1] + "</span>";
+        })
+        optimum_text.innerHTML = "Computer's solution:<br>" + optimum_string.join(" -> ");
         optimum_text.id = "optimum_text";
         success_popup.appendChild(optimum_text);
         let navigator_box = document.createElement("div");

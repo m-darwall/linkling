@@ -260,6 +260,10 @@ button{
     max-height: 80dvh;
 }
 
+#chain_text, #optimum_text{
+    line-height: calc(10px + 0.83em);
+}
+
 #howto{
     width: 50vw;
 }
