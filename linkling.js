@@ -74,7 +74,6 @@ class Chain{
                 break;
             }
         }
-        console.log("streak", streak)
         return streak;
     }
 
@@ -492,23 +491,8 @@ async function setup(wordlist, wordlist2){
         document.getElementById("target-container").appendChild(section);
     }
     chain.salvageState()
-
-    document.onkeydown = function(e){
-        if(chain.finished){
-            return cancelInputs();
-        }
-        if(e.key.length === 1 && e.key.toLowerCase().match(/[a-z]/i)){
-            document.getElementById("input-box").value += e.key.toLowerCase();
-        }
-        if(e.key === "Backspace"){
-            let input = document.getElementById("input-box");
-            input.value = input.value.slice(0, -1);
-        }
-        if(e.key === "Enter"){
-            chain.addWord(document.getElementById("input-box").value);
-            document.getElementById("input-box").value = "";
-        }
-    }
+    let handler = captureKeyboardHandler(chain);
+    document.addEventListener("keydown", handler)
     document.getElementById("submit-button").onclick = function(){
         if(chain.finished){
             return cancelInputs();
@@ -530,9 +514,28 @@ async function setup(wordlist, wordlist2){
         document.getElementById("howto").style.display = "none";
     }
 }
+function captureKeyboardHandler(chain){
+    return function captureKeyboard(e){
+        if(chain.finished){
+            return cancelInputs();
+        }
+        if(e.key.length === 1 && e.key.toLowerCase().match(/[a-z]/i)){
+            document.getElementById("input-box").value += e.key.toLowerCase();
+        }
+        if(e.key === "Backspace"){
+            let input = document.getElementById("input-box");
+            input.value = input.value.slice(0, -1);
+        }
+        if(e.key === "Enter"){
+            chain.addWord(document.getElementById("input-box").value);
+            document.getElementById("input-box").value = "";
+        }
+    }
+}
+
 
 function cancelInputs(){
-    document.onkeydown = function(){return false}
+    document.removeEventListener("keydown", captureKeyboardHandler);
     document.getElementById("submit-button").onclick = function(){return false};
     document.getElementById("undo-button").onclick = function(){return false};
     return true;
