@@ -17,7 +17,7 @@ class Chain{
     }
 
     storeLocally() {
-        localStorage.setItem(this.seed.toString(), JSON.stringify(this.history));
+        localStorage.setItem(this.seed, JSON.stringify(this.history));
     }
 
     checkCorruption(){
@@ -34,7 +34,7 @@ class Chain{
     }
 
     salvageState(){
-        let history = localStorage.getItem(this.seed.toString());
+        let history = localStorage.getItem(this.seed);
         if(history){
             history = JSON.parse(history);
             for(let i=0; i<history.length;i++){
@@ -74,6 +74,7 @@ class Chain{
                 break;
             }
         }
+        console.log("streak", streak)
         return streak;
     }
 
@@ -151,7 +152,7 @@ class Chain{
             point_breakdown.push("perfect!")
         }
         let share_text = "Linkling";
-        if(this.seed === parseInt(format_date(0))){
+        if(this.seed === format_date(0)){
             let streak = this.checkStreak();
             point_breakdown.push("streak: " + streak);
             share_text += " " + new Date().toDateString();
@@ -472,15 +473,15 @@ async function setup(wordlist, wordlist2){
     let goto_today = document.getElementById("goto_today")
     goto_today.addEventListener("click", redirectToToday);
     if(game){
-        seed = parseInt(game);
-        if(isNaN(seed)){
+        seed = game;
+        if(isNaN(parseInt(seed))){
             redirectToToday();
         }
         goto_today.style.display = "flex";
     } else {
-        seed = parseInt(format_date(0))
+        seed = format_date(0)
     }
-    let puzzle = generatePuzzle(words, even_words, 5, seed);
+    let puzzle = generatePuzzle(words, even_words, 5, parseInt(seed));
     document.getElementById("loading").style.display = "none"; // remove loading indicator when puzzle has generated
     let chain = new Chain(words, words2, ...puzzle, seed);
     for(let i = 0; i < puzzle[1].length; i++){
