@@ -115,6 +115,12 @@ class Chain{
         this.updateCompleted()
         let success_popup = document.getElementById('success');
         success_popup.style.display = 'flex';
+        // close button for summary
+        let close_success = document.createElement("button");
+        close_success.innerText = "X";
+        close_success.classList.add("close");
+        close_success.onclick = function(){document.getElementById("success").style.display = 'none'}
+        success_popup.appendChild(close_success);
         let score = 0;
         let max_score = 20*this.target.length;
         let point_breakdown = []
