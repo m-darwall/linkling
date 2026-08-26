@@ -113,13 +113,29 @@ class Chain{
     complete(){
         this.finished = true;
         this.updateCompleted()
+        // remove unnecessary buttons
+        document.getElementById("keyboard-container").style.display = "none";
+        document.getElementById("undo-button").style.display = "none";
+        document.getElementById("submit-button").style.display = "none";
+        document.getElementById("input-box").style.display = "none";
         let success_popup = document.getElementById('success');
         success_popup.style.display = 'flex';
         // close button for summary
         let close_success = document.createElement("button");
         close_success.innerText = "X";
         close_success.classList.add("close");
-        close_success.onclick = function(){document.getElementById("success").style.display = 'none'}
+        close_success.onclick = function(){
+            document.getElementById("success").style.display = 'none'
+            if(document.getElementById("show_success") === null){
+                // show summary button
+                let show_success = document.createElement("button");
+                show_success.innerText = "show summary";
+                show_success.onclick = function(){document.getElementById("success").style.display = 'flex'}
+                show_success.classList.add("button");
+                show_success.id = "show_success";
+                document.getElementById("input-container").appendChild(show_success);
+            }
+        }
         success_popup.appendChild(close_success);
         let score = 0;
         let max_score = 20*this.target.length;
