@@ -12,9 +12,9 @@ A word game about chaining together words to unlock endings. You can play it [he
 - custom game creator
 
 ## Third-party content
-The LICENSE file does not apply to the contents of the third-party directory.
+The LICENSE file does not apply to the third-party wordlist.
 The third-party directory contains: 
-- a word list derived from 3of6game.txt from the 12dicts set of word lists provided by Kevin Atkinson.
-- a word list derived from the [wordnik](https://github.com/wordnik/wordlist) wordlist provided by Erin McKean.
-
-Their licenses are contained at the start of each file.
+- a licenses.md file detailing the respective licenses for each of the wordlists below
+- an english word list derived from 3of6game.txt from the 12dicts set of word lists provided by Kevin Atkinson.
+- an english word list derived from the [wordnik](https://github.com/wordnik/wordlist) wordlist provided by Erin McKean.
+- a spanish wordlist from [xavier-hernandes](https://github.com/xavier-hernandez/spanish-wordlist).
