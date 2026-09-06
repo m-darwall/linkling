@@ -7,6 +7,7 @@ A word game about chaining together words to unlock endings. You can play it [he
 - potential hint and give up buttons
 - archive
 - instruction clarity
+- more concise share text
 - tutorial
 - improved summary aesthetics
 - faster page loading
