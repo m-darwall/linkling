@@ -264,6 +264,10 @@ button{
     line-height: calc(10px + 0.83em);
 }
 
+#chain_text{
+    margin-bottom: 0;
+}
+
 #howto{
     width: 50vw;
 }
@@ -288,6 +292,9 @@ button{
 }
 
 #show_success{
+    display: none;
+    justify-content: center;
+    align-items: center;
     width: 500px;
     min-height: 50px;
     font-size: 40px;

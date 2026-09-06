@@ -113,30 +113,22 @@ class Chain{
     complete(){
         this.finished = true;
         this.updateCompleted()
-        // remove unnecessary buttons
-        document.getElementById("keyboard-container").style.display = "none";
-        document.getElementById("undo-button").style.display = "none";
-        document.getElementById("submit-button").style.display = "none";
-        document.getElementById("input-box").style.display = "none";
+        // hide unnecessary buttons
+        hide("keyboard-container");
+        hide("undo-button");
+        hide("submit-button");
+        hide("input-box");
+        // show success popup
         let success_popup = document.getElementById('success');
         success_popup.style.display = 'flex';
         // close button for summary
-        let close_success = document.createElement("button");
-        close_success.innerText = "X";
-        close_success.classList.add("close");
+        let close_success = document.getElementById("close_success");
         close_success.onclick = function(){
-            document.getElementById("success").style.display = 'none'
-            if(document.getElementById("show_success") === null){
-                // show summary button
-                let show_success = document.createElement("button");
-                show_success.innerText = "show summary";
-                show_success.onclick = function(){document.getElementById("success").style.display = 'flex'}
-                show_success.classList.add("button");
-                show_success.id = "show_success";
-                document.getElementById("input-container").appendChild(show_success);
-            }
+            hide("success");
+            let show_success = document.getElementById("show_success");
+            show_success.onclick = function(){document.getElementById("success").style.display = 'flex'}
+            show_success.style.display = 'flex';
         }
-        success_popup.appendChild(close_success);
         let score = 0;
         let max_score = 20*this.target.length;
         let point_breakdown = []
@@ -204,6 +196,8 @@ class Chain{
             }
         })
         success_popup.appendChild(share_button);
+
+
         let chain_text = document.createElement("h5");
         let searching_for = 0;
         let found_at = []
@@ -223,7 +217,6 @@ class Chain{
         chain_text.id = "chain_text";
         success_popup.appendChild(chain_text);
 
-
         let optimum_text = document.createElement("h5");
         let optimum_string = this.optimum.map(function (item, index){
             if(index === 0){
@@ -234,6 +227,8 @@ class Chain{
         optimum_text.innerHTML = "Computer's solution:<br>" + optimum_string.join(" -> ");
         optimum_text.id = "optimum_text";
         success_popup.appendChild(optimum_text);
+
+
         let navigator_box = document.createElement("div");
         navigator_box.id = "navigator_box";
         success_popup.appendChild(navigator_box);
@@ -595,6 +590,10 @@ function cancelInputs(){
     document.getElementById("submit-button").onclick = function(){return false};
     document.getElementById("undo-button").onclick = function(){return false};
     return true;
+}
+
+function hide(id){
+    document.getElementById(id).style.display = "none";
 }
 
 function flash_key(key){
