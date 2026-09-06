@@ -8,7 +8,6 @@ A word game about chaining together words to unlock endings. You can play it [he
 - archive
 - instruction clarity
 - tutorial
-- improved summary aesthetics
 - faster page loading
 
 ## Third-party content
