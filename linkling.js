@@ -156,10 +156,16 @@ class Chain{
         point_breakdown.push(emoji_summary);
         point_breakdown.push("unlocked: +10 x " + this.target.length);
         score += this.target.length*10;
-        point_breakdown.push("excess words: -10 x " + (this.elements.length - 1 - this.target.length).toString());
-        score -= 10*(this.elements.length - 1 - this.target.length)
-        point_breakdown.push("undos: -10 x " + (this.undo_count).toString());
-        score -= 10*(this.undo_count)
+        let excess = this.elements.length - 1 - this.target.length;
+        if(excess !== 0){
+            point_breakdown.push("excess words: -10 x " + excess.toString());
+            score -= 10*excess;
+        }
+        let undos = this.undo_count;
+        if(undos !== 0){
+            point_breakdown.push("undos: -10 x " + undos.toString());
+            score -= 10*undos
+        }
         if(this.elements.length - 1 === this.target.length){
             point_breakdown.push("minimal: +" + 5*this.target.length.toString());
             score += this.target.length*5;
