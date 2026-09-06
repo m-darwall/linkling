@@ -213,7 +213,7 @@ class Chain{
             }
             return item;
         })
-        chain_text.innerHTML = "Your solution:<br>" + chain_string.join(" -> ");
+        chain_text.innerHTML = "Your solution:<br>" + chain_string.join(" → ");
         chain_text.id = "chain_text";
         success_popup.appendChild(chain_text);
 
@@ -224,7 +224,7 @@ class Chain{
             }
             return item.slice(0, -2) + "<span class='unlocker_left'>" + item[item.length - 2] + "</span><span class='unlocker_right'>" + item[item.length - 1] + "</span>";
         })
-        optimum_text.innerHTML = "Computer's solution:<br>" + optimum_string.join(" -> ");
+        optimum_text.innerHTML = "Computer's solution:<br>" + optimum_string.join(" → ");
         optimum_text.id = "optimum_text";
         success_popup.appendChild(optimum_text);
 
