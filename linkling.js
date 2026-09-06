@@ -603,20 +603,37 @@ function flash_key(key){
     }, 200)
 }
 
-function setup_keyboard(){
-    for(let i=0; i<26;i++){
-        let current_letter = "qwertyuiopasdfghjklzxcvbnm"[i];
-        let key = document.getElementById("letter_"+current_letter);
-        key.onclick = function(){
-            let input = document.getElementById("input-box");
-            input.value = input.value + current_letter;
-            flash_key(key)
-        };
-        document.getElementById("backspace").onclick = function(){
-            let input = document.getElementById("input-box");
-            input.value = input.value.slice(0, -1);
-            flash_key(document.getElementById("backspace"));
+// takes a list of strings where each string is a row of the keyboard
+function setup_keyboard(keys){
+    let container = document.getElementById("keyboard-container")
+    for(let row = 0; row < keys.length; row++){
+        let this_row = document.createElement("div")
+        this_row.classList.add("keyboard_row");
+        this_row.id = "keyboard_row_" + row.toString()
+        container.appendChild(this_row);
+        for(let key = 0; key < keys[row].length; key++){
+            let this_key = document.createElement("div")
+            this_key.classList.add("keyboard_key");
+            this_key.id = "letter_" + keys[row][key];
+            this_key.innerText = keys[row][key];
+            this_key.onclick = function(){
+                let input = document.getElementById("input-box");
+                input.value = input.value + keys[row][key];
+                flash_key(this_key)
+            };
+            this_row.appendChild(this_key);
+        }
+        if(row === keys.length - 1){
+            let backspace = document.createElement("div")
+            backspace.classList.add("keyboard_key");
+            backspace.innerText = "⌫"
+            backspace.id = "backspace"
+            backspace.onclick = function(){
+                let input = document.getElementById("input-box");
+                input.value = input.value.slice(0, -1);
+                flash_key(backspace);
+            }
+            this_row.appendChild(backspace)
         }
     }
-
 }
