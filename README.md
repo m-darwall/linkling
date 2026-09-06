@@ -9,6 +9,7 @@ A word game about chaining together words to unlock endings. You can play it [he
 - instruction clarity
 - tutorial
 - faster page loading
+- custom game creator
 
 ## Third-party content
 The LICENSE file does not apply to the contents of the third-party directory.
