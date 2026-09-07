@@ -1,7 +1,7 @@
 // last time words.txt was updated and therefore continuity was broken
 let last_word_update = "26072026";
 class Chain{
-    constructor(words, words_check, starter, target, found_path, seed){
+    constructor(words, words_check, starter, target, found_path, seed, language){
         this.elements = [starter];
         this.add_chain_element(starter, 0, false)
         this.target = target;
@@ -13,28 +13,26 @@ class Chain{
         this.seed = seed;
         this.history = []
         this.finished = false;
+        this.lang = language;
         this.checkCorruption()
-        this.lang = new URLSearchParams(window.location.search).get("lang");
-        if(this.lang == null){
-            this.lang = "";
-        }
     }
 
     storeLocally() {
         localStorage.setItem(this.lang + this.seed, JSON.stringify(this.history));
-        console.log("storing", this.lang+this.seed, JSON.stringify(this.history));
     }
 
     checkCorruption(){
-        let started = localStorage.getItem(this.lang + "started");
+        let started = localStorage.getItem("started");
         if(started){
             if(compareDates(started, last_word_update)){
+                console.log("clear")
                 localStorage.clear()
-                localStorage.setItem(this.lang + "started", format_date(0));
+                localStorage.setItem("started", format_date(0));
             }
         }else{
+            console.log("clear2")
             localStorage.clear();
-            localStorage.setItem(this.lang + "started", format_date(0))
+            localStorage.setItem("started", format_date(0))
         }
     }
 
@@ -88,7 +86,11 @@ class Chain{
     }
 
     addWord(word){
-        word = word.toLowerCase().replace(/[^a-zñáéíóúü]/g, "");
+        let regex = /[^a-z]/g
+        if(this.lang === "es"){
+            regex = /[^a-zñáéíóúü]/g
+        }
+        word = word.toLowerCase().replace(regex, "");
         let check = this.checkGuess(word);
         if (check !== false){
             this.elements.push(word);
@@ -357,15 +359,19 @@ class Chain{
     }
 }
 
-// takes path of wordlist and regex to take only wanted characters
-async function getWords(wordlist, regex){
+// takes path of wordlist and the language code
+async function getWords(wordlist, language){
     let data = (await fetch(wordlist)).arrayBuffer();
     // let words = await data.text();
     let words = new TextDecoder("iso-8859-1").decode(await data)
+    let regex = /[^a-z]/g
+    if(language === "es"){
+        regex = /[^a-zñáéíóúü]/g
+    }
     words = words.split(/[\r\n]+/).slice(26, -1);
     for (let i = 0; i < words.length; i++) {
         if(words[i] === words[i].toLowerCase()){
-            words[i] = words[i].replace(/[^a-zñáéíóúü]/g, "");
+            words[i] = words[i].replace(regex, "");
         }
     }
     return words;
@@ -521,9 +527,9 @@ function format_date(offset){
     return dd+mm+yyyy
 }
 
-async function setup(wordlist, wordlist2){
-    let words = await getWords(wordlist);
-    let words2 = await getWords(wordlist2);
+async function setup(wordlist, wordlist2, language){
+    let words = await getWords(wordlist, language);
+    let words2 = await getWords(wordlist2, language);
     let even_words = words.filter(function(word){
         return word.length % 2 === 0;
     })
@@ -542,7 +548,7 @@ async function setup(wordlist, wordlist2){
     }
     let puzzle = generatePuzzle(words, even_words, 5, parseInt(seed));
     document.getElementById("loading").style.display = "none"; // remove loading indicator when puzzle has generated
-    let chain = new Chain(words, words2, ...puzzle, seed);
+    let chain = new Chain(words, words2, ...puzzle, seed, language);
     for(let i = 0; i < puzzle[1].length; i++){
         let section = document.createElement("h3");
         section.innerText = puzzle[1][i];

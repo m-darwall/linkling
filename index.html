@@ -58,10 +58,10 @@
 <script>
     let lang = new URLSearchParams(window.location.search).get("lang");
     if(lang === "es"){
-        setup('third-party/spanish_words.txt', 'third-party/spanish_words.txt');
+        setup('third-party/spanish_words.txt', 'third-party/spanish_words.txt', "es");
         setup_keyboard(["qwertyuiop","asdfghjkl", "zxcvbnm", "ñáéíóúü"]);
     }else{
-        setup('third-party/words.txt', 'third-party/words2.txt');
+        setup('third-party/words.txt', 'third-party/words2.txt', "");
         setup_keyboard(["qwertyuiop","asdfghjkl", "zxcvbnm"]);
     }
 
