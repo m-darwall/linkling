@@ -14,27 +14,33 @@ class Chain{
         this.history = []
         this.finished = false;
         this.checkCorruption()
+        this.lang = new URLSearchParams(window.location.search).get("lang");
+        if(this.lang == null){
+            this.lang = "";
+        }
     }
 
     storeLocally() {
-        localStorage.setItem(this.seed, JSON.stringify(this.history));
+        localStorage.setItem(this.lang + this.seed, JSON.stringify(this.history));
+        console.log("storing", this.lang+this.seed, JSON.stringify(this.history));
     }
 
     checkCorruption(){
-        let started = localStorage.getItem("started");
+        let started = localStorage.getItem(this.lang + "started");
         if(started){
             if(compareDates(started, last_word_update)){
                 localStorage.clear()
-                localStorage.setItem("started", format_date(0));
+                localStorage.setItem(this.lang + "started", format_date(0));
             }
         }else{
             localStorage.clear();
-            localStorage.setItem("started", format_date(0))
+            localStorage.setItem(this.lang + "started", format_date(0))
         }
     }
 
     salvageState(){
-        let history = localStorage.getItem(this.seed);
+        let history = localStorage.getItem(this.lang + this.seed);
+        console.log(this.lang+this.seed, history);
         if(history){
             history = JSON.parse(history);
             for(let i=0; i<history.length;i++){
@@ -49,18 +55,18 @@ class Chain{
     }
 
     updateCompleted(){
-        let completed = localStorage.getItem("completed");
+        let completed = localStorage.getItem(this.lang + "completed");
         if(completed){
             completed = JSON.parse(completed);
             completed.push(this.seed)
         }else{
             completed = [this.seed]
         }
-        localStorage.setItem("completed", JSON.stringify(completed));
+        localStorage.setItem(this.lang + "completed", JSON.stringify(completed));
     }
 
     checkStreak(){
-        let completed = localStorage.getItem("completed");
+        let completed = localStorage.getItem(this.lang + "completed");
         if(completed === false){
             return false;
         }
