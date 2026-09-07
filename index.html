@@ -56,8 +56,15 @@
 </div>
 <script src="linkling.js"></script>
 <script>
-    setup('third-party/words.txt', 'third-party/words2.txt');
-    setup_keyboard(["qwertyuiop","asdfghjkl", "zxcvbnm"]);
+    let lang = new URLSearchParams(window.location.search).get("lang");
+    if(lang === "es"){
+        setup('third-party/spanish_words.txt', 'third-party/spanish_words.txt');
+        setup_keyboard(["qwertyuiop","asdfghjkl", "zxcvbnm", "ñáéíóúü"]);
+    }else{
+        setup('third-party/words.txt', 'third-party/words2.txt');
+        setup_keyboard(["qwertyuiop","asdfghjkl", "zxcvbnm"]);
+    }
+
 </script>
 </body>
 </html>
