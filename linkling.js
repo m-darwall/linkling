@@ -82,7 +82,7 @@ class Chain{
     }
 
     addWord(word){
-        word = word.replace(/[^a-zA-Z]/g, "").toLowerCase();
+        word = word.toLowerCase().replace(/[^a-zñáéíóúü]/g, "");
         let check = this.checkGuess(word);
         if (check !== false){
             this.elements.push(word);
@@ -351,13 +351,16 @@ class Chain{
     }
 }
 
-
-async function getWords(wordlist){
-    let data = await fetch(wordlist);
-    let words = await data.text();
+// takes path of wordlist and regex to take only wanted characters
+async function getWords(wordlist, regex){
+    let data = (await fetch(wordlist)).arrayBuffer();
+    // let words = await data.text();
+    let words = new TextDecoder("iso-8859-1").decode(await data)
     words = words.split(/[\r\n]+/).slice(26, -1);
     for (let i = 0; i < words.length; i++) {
-        words[i] = words[i].replace(/[^a-zA-Z0-9]/g, "");
+        if(words[i] === words[i].toLowerCase()){
+            words[i] = words[i].replace(/[^a-zñáéíóúü]/g, "");
+        }
     }
     return words;
 }
