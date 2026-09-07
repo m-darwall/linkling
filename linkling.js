@@ -570,10 +570,15 @@ async function setup(wordlist, wordlist2){
 }
 function captureKeyboardHandler(chain){
     return function captureKeyboard(e){
+        let lang = new URLSearchParams(window.location.search).get("lang");
+        let regex = /[a-z]/i
+        if(lang === "es"){
+            regex = /[a-zñáéíóúü]/i
+        }
         if(chain.finished){
             return cancelInputs();
         }
-        if(e.key.length === 1 && e.key.toLowerCase().match(/[a-z]/i)){
+        if(e.key.length === 1 && e.key.toLowerCase().match(regex)){
             document.getElementById("input-box").value += e.key.toLowerCase();
         }
         if(e.key === "Backspace"){
