@@ -175,9 +175,6 @@ class Chain{
             score += this.target.length*5;
         }
         point_breakdown.push("score: " + score + "/" + max_score);
-        if(score === max_score){
-            point_breakdown.push("perfect!")
-        }
         let share_text = "Linkling";
         if(this.seed === format_date(0)){
             let streak = this.checkStreak();
