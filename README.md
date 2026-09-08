@@ -1,6 +1,6 @@
 # Linkling
 
-A word game about chaining together words to unlock endings. You can play it [here](https://m-darwall.github.io/linkling). 
+A word game about chaining together words to unlock endings. You can play it in English [here](https://www.linkling.org) and in Spanish [here](https://www.linkling.org/?lang=es). 
 
 ## Future improvements
 - potential hint and give up buttons
