@@ -25,12 +25,10 @@ class Chain{
         let started = localStorage.getItem("started");
         if(started){
             if(compareDates(started, last_word_update)){
-                console.log("clear")
                 localStorage.clear()
                 localStorage.setItem("started", format_date(0));
             }
         }else{
-            console.log("clear2")
             localStorage.clear();
             localStorage.setItem("started", format_date(0))
         }
@@ -38,7 +36,6 @@ class Chain{
 
     salvageState(){
         let history = localStorage.getItem(this.lang + this.seed);
-        console.log(this.lang+this.seed, history);
         if(history){
             history = JSON.parse(history);
             for(let i=0; i<history.length;i++){
@@ -153,32 +150,36 @@ class Chain{
             }
             emoji_summary += "⬜"
         }
+        let names = ["unlocked", "excess words", "undos", "minimal", "in order", "score", "streak"]
+        if(this.lang === "es"){
+            names = ["encontrado", "innecesario", "deshechos", "minimal", "en orden", "puntos", "racha"]
+        }
         point_breakdown.push(emoji_summary);
-        point_breakdown.push("unlocked: +10 x " + this.target.length);
+        point_breakdown.push(names[0] + ": +10 x " + this.target.length);
         score += this.target.length*10;
         let excess = this.elements.length - 1 - this.target.length;
         if(excess !== 0){
-            point_breakdown.push("excess words: -10 x " + excess.toString());
+            point_breakdown.push(names[1] + ": -10 x " + excess.toString());
             score -= 10*excess;
         }
         let undos = this.undo_count;
         if(undos !== 0){
-            point_breakdown.push("undos: -10 x " + undos.toString());
+            point_breakdown.push(names[2] + ": -10 x " + undos.toString());
             score -= 10*undos
         }
         if(this.elements.length - 1 === this.target.length){
-            point_breakdown.push("minimal: +" + 5*this.target.length.toString());
+            point_breakdown.push(names[3] + ": +" + 5*this.target.length.toString());
             score += this.target.length*5;
         }
         if(this.target.join("") === this.found.join("")){
-            point_breakdown.push("in order: +" + 5*this.target.length.toString());
+            point_breakdown.push(names[4] + ": +" + 5*this.target.length.toString());
             score += this.target.length*5;
         }
-        point_breakdown.push("score: " + score + "/" + max_score);
+        point_breakdown.push(names[5] + ": " + score + "/" + max_score);
         let share_text = "Linkling";
         if(this.seed === format_date(0)){
             let streak = this.checkStreak();
-            point_breakdown.push("streak: " + streak);
+            point_breakdown.push(names[6] + ": " + streak);
             share_text += " " + new Date().toDateString();
         }
         for(let i = 0; i < point_breakdown.length; i++){
@@ -189,7 +190,7 @@ class Chain{
         }
         share_text += ":\n" + point_breakdown.join("\n") + "\n" + window.location.href;
         let share_button = document.createElement("button");
-        share_button.innerText = "share";
+        share_button.innerText = ((this.lang==="es") ? "compartir":"share");
         share_button.id = "share_button";
         share_button.addEventListener("click", async function(){
             if(navigator.share){
@@ -218,7 +219,8 @@ class Chain{
             }
             return item;
         })
-        chain_text.innerHTML = "Your solution:<br>" + chain_string.join(" → ");
+        let text = (this.lang==="es")?"Su solución:<br>":"Your solution:<br>";
+        chain_text.innerHTML = text + chain_string.join(" → ");
         chain_text.id = "chain_text";
         success_popup.appendChild(chain_text);
 
@@ -229,7 +231,8 @@ class Chain{
             }
             return item.slice(0, -2) + "<span class='unlocker_left'>" + item[item.length - 2] + "</span><span class='unlocker_right'>" + item[item.length - 1] + "</span>";
         })
-        optimum_text.innerHTML = "Computer's solution:<br>" + optimum_string.join(" → ");
+        text = (this.lang==="es")?"Solución calculada:<br>":"Computer's solution:<br>";
+        optimum_text.innerHTML = text + optimum_string.join(" → ");
         optimum_text.id = "optimum_text";
         success_popup.appendChild(optimum_text);
 
@@ -240,14 +243,14 @@ class Chain{
         if(this.checkStreak() === 0){
             let today_game = document.createElement("button");
             today_game.id = "today_game_finished";
-            today_game.innerText = "today's game";
+            today_game.innerText = (this.lang==="es")? "juego de hoy":"today's game";
             today_game.classList.add("game_end_navigator");
             today_game.addEventListener("click", redirectToToday)
             navigator_box.appendChild(today_game);
         }
         let random_game = document.createElement("button")
         random_game.id = "random_game_button";
-        random_game.innerText = "play a random game";
+        random_game.innerText = (this.lang==="es")? "otro juego":"play a random game";
         random_game.classList.add("game_end_navigator");
         random_game.addEventListener("click", function(){
             const url = new URL(window.location.href);

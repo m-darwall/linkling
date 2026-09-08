@@ -18,6 +18,10 @@ body{
     height: 100dvh;
 }
 
+.spanish_text{
+    display: none;
+}
+
 h1, .howto_header{
     margin:0;
 }
