@@ -368,14 +368,12 @@ class Chain{
 
 // takes path of wordlist and the language code
 async function getWords(wordlist, language){
-    let data = (await fetch(wordlist)).arrayBuffer();
-    // let words = await data.text();
-    let words = new TextDecoder("iso-8859-1").decode(await data)
-    let regex = /[^a-z]/g
-    if(language === "es"){
-        regex = /[^a-zñáéíóúü]/g
-    }
-    words = words.split(/[\r\n]+/).slice(26, -1);
+    let response = await fetch(wordlist);
+    let data = await response.arrayBuffer();
+    let words = new TextDecoder("iso-8859-1").decode(data)
+    words = words.split(/[\r\n]+/).slice(6, -1);
+    console.log([...words]);
+    let regex = (language === "es") ? /[^a-zñáéíóúü]/g : /[^a-z]/g
     for (let i = 0; i < words.length; i++) {
         if(words[i] === words[i].toLowerCase()){
             words[i] = words[i].replace(regex, "");
