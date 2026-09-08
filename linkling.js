@@ -152,7 +152,7 @@ class Chain{
         }
         let names = ["unlocked", "excess words", "undos", "minimal", "in order", "score", "streak"]
         if(this.lang === "es"){
-            names = ["encontrado", "innecesario", "deshechos", "minimal", "en orden", "puntos", "racha"]
+            names = ["encontrado", "innecesario", "deshechos", "mínimo", "en orden", "puntos", "racha"]
         }
         point_breakdown.push(emoji_summary);
         point_breakdown.push(names[0] + ": +10 x " + this.target.length);
