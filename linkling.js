@@ -180,7 +180,14 @@ class Chain{
         if(this.seed === format_date(0)){
             let streak = this.checkStreak();
             point_breakdown.push(names[6] + ": " + streak);
-            share_text += " " + new Date().toDateString();
+            // share_text += " " + new Date().toDateString();
+            let locale = (this.lang==="es")? "es-ES" : "en-UK";
+            share_text += " " + new Date().toLocaleDateString(locale, {
+                weekday: 'short',
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric'});
+
         }
         for(let i = 0; i < point_breakdown.length; i++){
             let summary_element = document.createElement("h4")
@@ -198,9 +205,9 @@ class Chain{
                     title: "Linkling",
                     text: share_text})
             }else{
-                navigator.clipboard.writeText(share_text).then(() => share_button.innerText = "copied");
+                navigator.clipboard.writeText(share_text).then(() => share_button.innerText = ((this.lang==="es") ? "copiado":"copied"));
             }
-        })
+        }.bind(this));
         success_popup.appendChild(share_button);
 
 
