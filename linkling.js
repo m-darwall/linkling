@@ -422,7 +422,7 @@ function generatePuzzle(words, even_words, target_length, seed){
         })]];
         let explored = new Set([start]);
         while(frontier.length > 0){
-            let current = frontier.shift();
+            let current = frontier.pop();
             let current_word = current[0];
             let current_path = current[1];
             let current_available = current_path.map(word => word.slice(-2)).slice(1);
@@ -451,7 +451,7 @@ function generatePuzzle(words, even_words, target_length, seed){
                     }
                     if(checkOverlap(current_word, word)){
                         explored.add(word)
-                        frontier.unshift([word, [...current_path, word], current_targets])
+                        frontier.push([word, [...current_path, word], current_targets])
                     }
                 }
             }
