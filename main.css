@@ -340,6 +340,10 @@ button{
     margin: auto;
 }
 
+#email{
+    font-size: 60px;
+}
+
 .external_links, .external_links:link, .external_links:visited{
     font-size: 30px;
     color: var(--text);
