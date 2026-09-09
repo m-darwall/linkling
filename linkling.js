@@ -314,13 +314,13 @@ class Chain{
 
     checkGuess(guess){
         if(!this.words_check.includes(guess)) {
-            this.display_error("not in word list, sorry")
+            this.display_error((this.lang==="es")?"lo siento, no está en la lista de palabras":"not in word list, sorry")
             return false;
         }
         let latest = this.elements[this.elements.length - 1];
         let overlap = checkOverlap(latest, guess)
         if(overlap === false){
-            this.display_error("incorrect overlap")
+            this.display_error((this.lang==="es")?"no traslapa":"incorrect overlap")
             return false;
         }
         return overlap;
