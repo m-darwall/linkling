@@ -1,5 +1,5 @@
 // last time words.txt was updated and therefore continuity was broken
-let last_word_update = "26072026";
+let last_word_update = "09092026";
 class Chain{
     constructor(words, words_check, starter, target, found_path, seed, language){
         this.elements = [starter];
@@ -25,7 +25,11 @@ class Chain{
         let started = localStorage.getItem("started");
         if(started){
             if(compareDates(started, last_word_update)){
+                let completed = localStorage.getItem("completed");
+                let completed_es = localStorage.getItem("escompleted");
                 localStorage.clear()
+                localStorage.setItem("completed", completed);
+                localStorage.setItem("escompleted", completed_es);
                 localStorage.setItem("started", format_date(0));
             }
         }else{
@@ -371,8 +375,7 @@ async function getWords(wordlist, language){
     let response = await fetch(wordlist);
     let data = await response.arrayBuffer();
     let words = new TextDecoder("iso-8859-1").decode(data)
-    words = words.split(/[\r\n]+/).slice(6, -1);
-    console.log([...words]);
+    words = words.split(/[\r\n]+/);
     let regex = (language === "es") ? /[^a-zñáéíóúü]/g : /[^a-z]/g
     for (let i = 0; i < words.length; i++) {
         if(words[i] === words[i].toLowerCase()){
