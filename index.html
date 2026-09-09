@@ -44,35 +44,30 @@
     <button class="close" id="close_howto">x</button>
     <h2 class="english_text">How to play</h2>
     <h2 class="spanish_text">Instrucciones</h2>
-    <h3 class="howto_header english_text">Aim of the game</h3>
-    <h3 class="howto_header spanish_text">Objetivo</h3>
-    <p class="english_text">Unlock all the pairs of letters at the bottom of the screen by finding words that end with those pairs. They can be unlocked in any order.</p>
-    <p class="spanish_text">El objetivo es encontrar todas las parejas al final de la página al introducir palabras que terminen con estas parejas.</p>
-    <p class="english_text">You find words by adding them to the end of the chain.</p>
-    <p class="spanish_text">Puede encontrar palabras al añadirlas al cadena.</p>
-    <h3 class="howto_header english_text">The chain</h3>
-    <h3 class="howto_header spanish_text">La cadena</h3>
-    <p class="english_text">At the top of the page is the start of a chain of words.</p>
-    <p class="spanish_text">En la parte superior de la página es el principio de una cadena de palabras.</p>
-    <p class="english_text">You can add a word to the chain if the start of the new word overlaps with the end of the last word in the chain by 2 or more letters.</p>
-    <p class="spanish_text">Puede añadir a al cadena si la palabra nueva comienza con dos o más letras que terminan la anterior de la cadena.</p>
-    <p class="english_text">For example, if the last word was "education", you could follow it with "<span class="overlap_end">on</span>set", "<span class="overlap_end">ion</span>ic" or "<span class="overlap_end">education</span>al".</p>
-    <p class="spanish_text">Por ejemplo, si la palabra anterior fuera "almacén", puede añadir "<span class="overlap_end">én</span>fasis" o "<span class="overlap_end">cén</span>timo".</p>
-    <p class="english_text">If that all sounds complicated, don't worry, it's easier than it sounds. You'll get the hang of it fast.</p>
-    <p class="spanish_text">Es más fácil de lo que parece. Ya entenderá.</p>
+    <p class="english_text">At the top of the page is the first word in a list you can add to.</p>
+    <p class="spanish_text">El objetivo es encontrar palabras que terminen en todas las parejas en la palabra al final de la página.</p>
+    <p class="english_text">You can only add words that overlap with the previous word in the list by 2 letters or more.</p>
+    <p class="spanish_text">Cuando encuentra palabras, puede añadirlas a la cadena.</p>
+    <p class="english_text">The aim of the game is to have the list contain words that end in each of the underlined pairs of letters at the bottom.</p>
+    <p class="spanish_text">Cuando encuentra palabras, puede añadirlas a la cadena.</p>
+    <h3 class="howto_header english_text">Example</h3>
+    <h3 class="howto_header spanish_text">Ejemplo</h3>
+    <p class="english_text">If the last word was "education", you could perhaps add "<span class="overlap_end">on</span>set", "<span class="overlap_end">ion</span>ic" or "<span class="overlap_end">education</span>al".</p>
+    <p class="spanish_text">Si la palabra anterior fuera "almacén", puede añadir "<span class="overlap_end">én</span>fasis" o "<span class="overlap_end">cén</span>timo".</p>
     <h3 class="howto_header english_text">Scoring</h3>
     <h3 class="howto_header spanish_text">Puntos</h3>
-    <p class="english_text">You gain points for unlocking pairs but lose them for using the undo button and for each word you add that doesn't unlock a new pair.</p>
+    <p class="english_text">You gain points for each word that ends in a new target pair. You lose points for each "undo" and each word without a target ending.</p>
     <p class="spanish_text">Ganará puntos por encontrar las parejas y perderá puntos por usar el botón de deshacer o usar palabras que no terminan con parejas necesarias.</p>
-
-    <p class="english_text">There are also points available for using the minimum possible number of words or unlocking the endings in the order they appear at the bottom of the screen.</p>
-    <p class="spanish_text">También hay puntos por usar el número mínimo de palabras y por encontrar las parejas en el orden en que aparecen al final de la página.</p>
+    <p class="english_text">There are also bonus points for finding the pairs in order and for not using any words without a target ending.</p>
+    <p class="spanish_text">Ganará puntos por encontrar las parejas y perderá puntos por usar el botón de deshacer o usar palabras que no terminan con parejas necesarias.</p>
+    <p class="english_text">There is always a solution that unlocks the pairs in order without any excess words.</p>
+    <p class="spanish_text">Ganará puntos por encontrar las parejas y perderá puntos por usar el botón de deshacer o usar palabras que no terminan con parejas necesarias.</p>
 </div>
 <script src="linkling.js"></script>
 <script>
     let lang = new URLSearchParams(window.location.search).get("lang");
     if(lang === "es"){
-        document.title = "Linkling -  un juego diario sobre enlazar palabras solapamientas";
+        document.title = "Linkling -  un juego diario sobre enlazar palabras traslapadas";
         let elements = document.querySelectorAll('.english_text');
         for(let i=0; i<elements.length; i++){
             elements[i].style.display = 'none';
