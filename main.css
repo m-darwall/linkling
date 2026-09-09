@@ -340,6 +340,18 @@ button{
     margin: auto;
 }
 
+.external_links, .external_links:link, .external_links:visited{
+    font-size: 30px;
+    color: var(--text);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:link, a:visited, a:hover, a:active{
+    color: var(--text);
+}
+
+
 #howto_button{
     right: 0;
     background-color: var(--button);
