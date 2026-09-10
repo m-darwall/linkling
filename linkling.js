@@ -386,14 +386,11 @@ async function getWords(wordlist, language){
     return words;
 }
 
-function get_possible_targets(even_words, words, target_length){
-    let split_even_words = [];
-    for(let i = 0; i < even_words.length; i++){
-        split_even_words.push([]);
-        for(let j = 0; j < even_words[i].length; j+=2){
-            split_even_words[i].push(even_words[i][j] + even_words[i][j+1]);
-        }
-    }
+function get_possible_targets(words, target_length){
+    let even_words = words.filter(function(word){
+        return word.length % 2 === 0;
+    });
+    let split_even_words = even_words.map(function (word){return word.match(/.{1,2}/g)});
     even_words = split_even_words.filter(function(word){return word.length === target_length && [...new Set(word)].length === target_length});
     // achievable endings from wordlist
     let end_pairs = [...new Set(words.map((word) =>{return word.slice(-2)}))]
@@ -407,6 +404,18 @@ function get_possible_targets(even_words, words, target_length){
         return true;
     });
     return even_words;
+}
+// Index words by their last two letters.
+function getWordsByEnding(words){
+    const wordsByEnding = new Map();
+    for (let word of words) {
+        let ending = word.slice(-2);
+        if (!wordsByEnding.has(ending)) {
+            wordsByEnding.set(ending, []);
+        }
+        wordsByEnding.get(ending).push(word);
+    }
+    return wordsByEnding;
 }
 
 function generatePuzzle(words, even_words, target_length, seed){
