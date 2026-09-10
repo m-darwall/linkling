@@ -395,7 +395,7 @@ function get_possible_targets(even_words, words, target_length){
     }
     even_words = split_even_words.filter(function(word){return word.length === target_length && [...new Set(word)].length === target_length});
     // achievable endings from wordlist
-    let end_pairs = [...new Set(words.map((word) =>{return word.slice(-2)}))].filter(function(word){return word.length === 2})
+    let end_pairs = [...new Set(words.map((word) =>{return word.slice(-2)}))]
     // filter out words with unreachable pairs
     even_words = even_words.filter(function(even_word){
         for(let i = 0; i < even_word.length; i++){
