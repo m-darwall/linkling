@@ -418,15 +418,17 @@ function getWordsByEnding(words){
     return wordsByEnding;
 }
 
-function generatePuzzle(words, even_words, target_length, seed){
+function generatePuzzle(words, target_length, seed){
     words = fisherYatesShuffle(words, seed);
-    let possible_targets = get_possible_targets(even_words, words, target_length);
+    let possible_targets = get_possible_targets(words, target_length);
+    possible_targets = fisherYatesShuffle(possible_targets, seed);
     let start = ""
     let target = []
     let attempts = 0;
     while (target.length === 0){
         start = words[attempts];
         attempts++;
+        // remove words with pairs that would be unlocked by the starting word
         let frontier = [[start, [start], possible_targets.filter(function(word){
             return word.includes(start.slice(-2)) === false;
         })]];
@@ -435,34 +437,31 @@ function generatePuzzle(words, even_words, target_length, seed){
             let current = frontier.pop();
             let current_word = current[0];
             let current_path = current[1];
-            let current_available = current_path.map(word => word.slice(-2)).slice(1);
             let current_targets = current[2]
             if(explored.size > 1){
+                //reduce targets to those where the next relevant pair matches the last two letters of this word
                 current_targets = current[2].filter(function(word){
-                    return word[current_available.length - 1] === current_word.slice(-2)
-                    // return word.includes(current_word.slice(-2));
+                    return word[current_path.length - 2] === current_word.slice(-2)
                 })
                 if(current_targets.length === 0){
                     continue;
                 }
             }
-
-            if(current_available.length === target_length){
+            // if the so far constructed word is of the required length return it as the puzzle
+            if(current_path.length === target_length + 1){
                 target = current_targets[0];
                 return [start, target, current_path];
             }
 
-            if(current_path.length - 1 < target_length){
-                let required = getRequiredPairs(current_targets, current_available);
-                for(let i=0;i<words.length;i++){
-                    let word = words[i];
-                    if(required.has(word.slice(-2)) === false || explored.has(word)){
-                        continue;
-                    }
-                    if(checkOverlap(current_word, word)){
-                        explored.add(word)
-                        frontier.push([word, [...current_path, word], current_targets])
-                    }
+            let required = getRequiredPairs(current_targets, current_path.length - 1);
+            for(let i=0;i<words.length;i++){
+                let word = words[i];
+                if(required.has(word.slice(-2)) === false || explored.has(word)){
+                    continue;
+                }
+                if(checkOverlap(current_word, word)){
+                    explored.add(word)
+                    frontier.push([word, [...current_path, word], current_targets])
                 }
             }
 
@@ -589,17 +588,17 @@ function compareDates(date1, date2) {
     return dateObj1.getTime() < dateObj2.getTime();
 }
 
-
-function getRequiredPairs(possible_targets, current_available){
+// for getting the set of pairs that are next in the possible targets
+function getRequiredPairs(possible_targets, index){
     let needed = new Set();
     for(let i = 0; i < possible_targets.length; i++){
-        needed.add(possible_targets[i][current_available.length]);
+        needed.add(possible_targets[i][index]);
     }
     return needed
 }
 
 function fisherYatesShuffle(arr, seed) {
-    const random = mulberry32(seed);
+    const random = mulberry32(parseInt(seed));
     for (let i = arr.length - 1; i > 0; i--) {
         const j = Math.floor(random() * (i + 1));
         [arr[i], arr[j]] = [arr[j], arr[i]];
@@ -647,9 +646,6 @@ function format_date(offset){
 async function setup(wordlist, wordlist2, language){
     let words = await getWords(wordlist, language);
     let words2 = await getWords(wordlist2, language);
-    let even_words = words.filter(function(word){
-        return word.length % 2 === 0;
-    })
     let seed;
     let game = new URLSearchParams(window.location.search).get("game");
     let goto_today = document.getElementById("goto_today")
@@ -663,7 +659,7 @@ async function setup(wordlist, wordlist2, language){
     } else {
         seed = format_date(0)
     }
-    let puzzle = generatePuzzle(words, even_words, 5, parseInt(seed));
+    let puzzle = GeneratePuzzleReverse(words, 5, seed);
     document.getElementById("loading").style.display = "none"; // remove loading indicator when puzzle has generated
     let chain = new Chain(words, words2, ...puzzle, seed, language);
     for(let i = 0; i < puzzle[1].length; i++){
