@@ -1,5 +1,5 @@
 // last time words.txt was updated and therefore continuity was broken
-let last_word_update = "09092026";
+let last_word_update = "10092026";
 class Chain{
     constructor(words, words_check, starter, target, found_path, seed, language){
         this.elements = [starter];
