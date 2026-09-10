@@ -460,6 +460,105 @@ function generatePuzzle(words, even_words, target_length, seed){
     }
 }
 
+// searches for a puzzle starting with the target rather than the starting word
+// produces more varied puzzles but less likely to find a solution so falls back on generatePuzzle if none found
+function GeneratePuzzleReverse(words, target_length, seed){
+    let possible_targets = get_possible_targets(words, target_length);
+    possible_targets = fisherYatesShuffle(possible_targets, seed);
+    words = fisherYatesShuffle(words, seed);
+    // Index words by their last two letters.
+    let wordsByEnding = getWordsByEnding(words)
+
+    let attempts = 0;
+    let max_attempts = Math.min(20, possible_targets.length);
+    while(attempts < max_attempts){
+        let target = possible_targets[attempts];
+        attempts++;
+        let frontier = [];
+        let visited = new Set();
+        let potentials = wordsByEnding.get(target[target.length - 1])||[];
+        for(let i=0;i<potentials.length;i++){
+             if(potentials[i].includes(target[target.length - 2])){
+                 frontier.push([potentials[i]]);
+                 visited.add(potentials[i]);
+            }
+        }
+        while(frontier.length > 0){
+            let current_path = frontier.pop();
+            let current_word = current_path[0]
+            if(current_path.length === target_length){
+                for(let i=0;i<words.length;i++){
+                    if(!target.includes(words[i].slice(-2)) && checkOverlap(words[i], current_word)){
+                        let start = words[i];
+                        current_path = [start, ...current_path];
+                        return [words[i], target, current_path];
+                    }
+                }
+                continue;
+            }
+            let needed = target[target.length - 1 - current_path.length];
+            let potentials = wordsByEnding.get(needed) || [];
+            for(let i=0;i<potentials.length;i++){
+                let word = potentials[i];
+                if(!checkOverlap(word, current_word)){
+                    continue;
+                }
+                if(visited.has(word)){
+                    continue;
+                }
+                frontier.push([word, ...current_path]);
+                visited.add(potentials[i]);
+
+            }
+        }
+    }
+    // fall back to standard search if not found
+    return generatePuzzle(words, target_length, seed);
+}
+
+
+
+// tries to find a puzzle for a given start and target word
+function join(start, end, words){
+    if(end.length % 2 !== 0){
+        return false;
+    }
+    let target = end.match(/.{1,2}/g);
+    let necessary_words = words.filter(function(word){
+        return target.includes(word.slice(-2));
+    })
+    // frontier is made up of potential paths
+    let frontier = [[start]];
+    let explored = new Set([start]);
+    while(frontier.length > 0){
+        let current_path = frontier.pop();
+        let current_word = current_path[current_path.length - 1];
+
+        let required = target[current_path.length - 1]
+        let potential_next = necessary_words.filter(function(word){
+            return word.slice(-2) === required;
+        })
+        for(let i=0;i<potential_next.length;i++){
+            if(potential_next[i].slice(-2) !== required){
+                continue;
+            }
+            if(!checkOverlap(current_word, potential_next[i])){
+                continue;
+            }
+            if(explored.has(potential_next[i])){
+                continue;
+            }
+            explored.add(potential_next[i])
+            frontier.push([...current_path, potential_next[i]])
+            if(current_path.length === target.length){
+                return [start, target, current_path];
+            }
+
+        }
+    }
+    return false;
+}
+
 // returns true if date1 is before date2. date strings in ddmmyyyy format
 function compareDates(date1, date2) {
     const d1 = {
