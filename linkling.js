@@ -382,6 +382,7 @@ async function getWords(wordlist, language){
             words[i] = words[i].replace(regex, "");
         }
     }
+    words = words.filter(function(word){return word.length})
     return words;
 }
 
