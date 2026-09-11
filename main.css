@@ -368,6 +368,21 @@ a:link, a:visited, a:hover, a:active{
     color: var(--text);
     position: fixed;
 }
+#display_give_up{
+    border-radius: 20px;
+    aspect-ratio: 1/1;
+    background-color: var(--button);
+    color: var(--text);
+    height: 40px;
+    font-size: 15px;
+    border: 0;
+    position: fixed;
+    right: 50px;
+}
+
+.yes, .no{
+    min-width: 70px;
+}
 
 @media screen and (max-width: 600px) {
     #input-container{

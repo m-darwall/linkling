@@ -42,9 +42,13 @@ class Chain{
         let history = localStorage.getItem(this.lang + this.seed);
         if(history){
             history = JSON.parse(history);
+            console.log(history);
             for(let i=0; i<history.length;i++){
                 if(history[i] === -1){
                     this.undo()
+                }else if(history[i] === -2){
+                    console.log(history[i]);
+                    this.giveUp();
                 }else{
                     this.addWord(history[i]);
                 }
@@ -119,9 +123,20 @@ class Chain{
         return false;
     }
 
-    complete(){
+    giveUp(){
+        this.history.push(-2);
+        this.storeLocally();
+        hide("confirm_give_up");
+        hide("display_give_up");
+        document.getElementById("summary_title").innerText = (this.lang==="es")?"¡Qué lástima!":"Oh, dear!";
+        this.complete(true);
+    }
+
+    complete(gaveUp=false){
         this.finished = true;
-        this.updateCompleted()
+        if(!gaveUp){
+            this.updateCompleted()
+        }
         // hide unnecessary buttons
         hide("keyboard-container");
         hide("undo-button");
@@ -159,9 +174,9 @@ class Chain{
             names = ["encontrado", "innecesario", "deshechos", "mínimo", "en orden", "resultado", "racha"]
         }
         point_breakdown.push(emoji_summary);
-        point_breakdown.push(names[0] + ": +10 x " + this.target.length);
-        score += this.target.length*10;
-        let excess = this.elements.length - 1 - this.target.length;
+        point_breakdown.push(names[0] + ": +10 x " + this.found.length);
+        score += this.found.length*10;
+        let excess = this.elements.length - 1 - this.found.length;
         if(excess !== 0){
             point_breakdown.push(names[1] + ": -10 x " + excess.toString());
             score -= 10*excess;
@@ -179,7 +194,11 @@ class Chain{
             point_breakdown.push(names[4] + ": +" + 5*this.target.length.toString());
             score += this.target.length*5;
         }
-        point_breakdown.push(names[5] + ": " + score + "/" + max_score);
+        if(!gaveUp){
+            point_breakdown.push(names[5] + ": " + score + "/" + max_score);
+        }else{
+            point_breakdown = [point_breakdown[0], names[5]+": N/A"];
+        }
         let share_text = "Linkling";
         if(this.seed === format_date(0)){
             let streak = this.checkStreak();
@@ -251,7 +270,7 @@ class Chain{
         let navigator_box = document.createElement("div");
         navigator_box.id = "navigator_box";
         success_popup.appendChild(navigator_box);
-        if(this.checkStreak() === 0){
+        if(this.seed !== format_date(0) && this.checkStreak() === 0){
             let today_game = document.createElement("button");
             today_game.id = "today_game_finished";
             today_game.innerText = (this.lang==="es")? "juego de hoy":"today's game";
@@ -691,6 +710,15 @@ async function setup(wordlist, wordlist2, language){
     }
     document.getElementById("close_howto").onclick =function (){
         document.getElementById("howto").style.display = "none";
+    }
+    document.getElementById("display_give_up").onclick = function(){
+        document.getElementById("confirm_give_up").style.display = "flex";
+    }
+    document.getElementById("give_up").onclick = function(){
+        chain.giveUp()
+    }
+    document.getElementById("cancel_give_up").onclick = function(){
+        hide("confirm_give_up")
     }
 }
 function captureKeyboardHandler(chain){

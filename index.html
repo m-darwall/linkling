@@ -11,12 +11,13 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="stylesheet" href="main.css">
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="167c23ee-7ad9-4357-9081-989bc49e1ad4"></script>
+<!--    <script defer src="https://cloud.umami.is/script.js" data-website-id="167c23ee-7ad9-4357-9081-989bc49e1ad4"></script>-->
 </head>
 <body>
 <div id="top">
     <button id="goto_today" class="button"><span class="english_text">today's game</span><span class="spanish_text">juego de hoy</span></button>
     <h1>Linkling</h1>
+    <button id="display_give_up"><span class="english_text">give up</span><span class="spanish_text">rendirse</span></button>
     <button id="howto_button">?</button>
 </div>
 
@@ -37,8 +38,16 @@
 <div id="keyboard-container"></div>
 </div>
 <div id="success" class="popup">
-    <h2><span class="english_text">Well done!</span><span class="spanish_text">¡Bien hecho!</span></h2>
+    <h2 id="summary_title"><span class="english_text">Well done!</span><span class="spanish_text">¡Bien hecho!</span></h2>
     <button class="close" id="close_success">X</button>
+</div>
+<div id="confirm_give_up" class="popup">
+    <h2><span class="english_text">Give up?</span><span class="spanish_text">¿Quiere rendirse?</span></h2>
+    <p><span class="english_text">Are you sure? If you have a streak it will break</span><span class="spanish_text">¿Está seguro? Su racha se romperá</span></p>
+    <div style="display:inline-flex">
+        <button class="yes game_end_navigator" id="give_up"><span class="english_text">Yes</span><span class="spanish_text">Sí</span></button>
+        <button class="no game_end_navigator" id="cancel_give_up">No</button>
+    </div>
 </div>
 <div id="howto" class="popup">
     <button class="close" id="close_howto">x</button>
