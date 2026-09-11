@@ -320,7 +320,7 @@ button{
     box-shadow: -7px 6px 20px 1px;;
 }
 
-.button:hover, #share_button:hover, .game_end_navigator:hover, #howto_button:hover{
+.button:hover, #share_button:hover, .game_end_navigator:hover, #howto_button:hover, #display_give_up:hover{
     background-color: var(--input);
 }
 
@@ -378,6 +378,7 @@ a:link, a:visited, a:hover, a:active{
     border: 0;
     position: fixed;
     right: 50px;
+    font-weight: bold;
 }
 
 .yes, .no{
