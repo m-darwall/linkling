@@ -108,7 +108,7 @@ class Chain{
                 }else{
                     this.add_chain_element(word, check, false);
                 }
-                let to_edit = document.getElementsByClassName("section_" + word.slice(-2))
+                let to_edit = document.getElementsByClassName("section" + word.slice(-2))
                 for(let i = 0; i < to_edit.length; i++){
                     to_edit[i].classList.add("unlocked");
                 }
@@ -369,7 +369,7 @@ class Chain{
             }
             if(counter === 0){
                 this.found.pop()
-                let to_edit = document.getElementsByClassName("section_" + latest.slice(-2))
+                let to_edit = document.getElementsByClassName("section" + latest.slice(-2))
                 for(let i = 0; i < to_edit.length; i++){
                     to_edit[i].classList.remove("unlocked")
                 }
@@ -685,7 +685,7 @@ async function setup(wordlist, wordlist2, language){
         let section = document.createElement("h3");
         section.innerText = puzzle[1][i];
         section.classList.add("target");
-        section.classList.add("section_" + puzzle[1][i])
+        section.classList.add("section" + puzzle[1][i])
         document.getElementById("target-container").appendChild(section);
     }
     chain.salvageState()
